@@ -21,4 +21,5 @@ def email_alert(subject, body, to):
 
 
 email_message = "\nToday will be 80F. \nWear a short sleave shirt and shorts."
-email_alert("WhatToWear Daily Recommendation", email_message, "6104570509@txt.att.net")
+email_alert("WhatToWear Daily Recommendation", email_message, "lodise8@aol.com")
+# if I want to go back to texting 6104570509@txt.att.net
