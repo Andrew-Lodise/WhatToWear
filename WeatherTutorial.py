@@ -13,8 +13,8 @@ if weather_data.json()["cod"] == 404:
     print("No city found.")
 
 else:
-    pass
+
     # print(weather_data.json()["weather"])
     # print(weather_data.json()["main"])
     # print(weather_data.json()["wind"])
-    # print(weather_data.json())
+    print(weather_data.json())
