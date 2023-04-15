@@ -1,12 +1,13 @@
 import smtplib
 from email.message import EmailMessage
 
-
+# this currently always sends it to my aol email from my gmail
 def email_alert(body):
     msg = EmailMessage()
     msg.set_content(body)
     msg["subject"] = "WhatToWear Daily Recommendation"
     msg["to"] = "lodise8@aol.com"
+    # target_text_email = "6104570509@txt.att.net" *if you want a text instead*
 
     user = "andrew8lodise@gmail.com"
     msg["from"] = user
@@ -18,12 +19,3 @@ def email_alert(body):
     server.send_message(msg)
 
     server.quit()
-
-
-email_subject = "WhatToWear Daily Recommendation"
-email_message = "\nToday will be 80F. \nWear a short sleave shirt and shorts."
-target_email = "lodise8@aol.com"
-target_text_email = "6104570509@txt.att.net"
-# email_alert(email_subject, email_message, target_email)
-
-# if I want to go back to texting 6104570509@txt.att.net
