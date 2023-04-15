@@ -19,11 +19,15 @@ def get_weather_data(city):
 
 # outputs data from weather data, might make it a dictionary later
 def get_info(wd):
-    desc = wd["weather"][0]["description"]
-    cur_temp = wd["main"]["temp"]
-    cur_feel = wd["main"]["feels_like"]
-    high = wd["main"]["temp_max"]
-    low = wd["main"]["temp_min"]
-    humid = wd["main"]["humidity"]
-    wind_speed = wd["wind"]["speed"]
-    return [desc, cur_temp, cur_feel, high, low, humid, wind_speed]
+    dict = {}
+    dict["desc"] = wd["weather"][0]["description"]
+    dict["cur_temp"] = wd["main"]["temp"]
+    dict["cur_feel"] = wd["main"]["feels_like"]
+    dict["high"] = wd["main"]["temp_max"]
+    dict["low"] = wd["main"]["temp_min"]
+    dict["humid"] = wd["main"]["humidity"]
+    dict["wind_speed"] = wd["wind"]["speed"]
+    return dict
+
+
+# print(get_info(get_weather_data("Philadelphia")))
