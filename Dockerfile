@@ -3,4 +3,4 @@ WORKDIR /app
 COPY . .
 RUN pip install requests
 #CMD ["python", "TextingTutorial.py"]
-CMD ["python", "WeatherTutorial.py"]
+CMD ["python", "main.py"]
