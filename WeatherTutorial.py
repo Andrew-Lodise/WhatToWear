@@ -30,7 +30,8 @@ def get_info(wd):
     return dict
 
 
-# my_data = get_info(get_weather_data("Philadelphia"))
+my_data = get_weather_data("Philadelphia")
+print(my_data)
 # print(round(my_data["high"]))
 
 # docker run --name sqltest -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mypass -d mysql
