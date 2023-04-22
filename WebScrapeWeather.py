@@ -23,4 +23,4 @@ def get_weather(query):
     #print(f"High: {high} \t Low: {low}")
 
 
-print(get_weather("Philadelphia"))
+#print(get_weather("Philadelphia"))

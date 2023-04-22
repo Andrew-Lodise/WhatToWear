@@ -1,15 +1,16 @@
-from WeatherTutorial import get_weather_data, get_info
+from WebScrapeWeather import get_weather
 from TextingTutorial import email_alert
 
 
 def main():
 
     city = "Philadelphia"
-    weather_data = get_weather_data(city)
-    data = get_info(weather_data)
-    msg = f"Today is {data['desc']}, with a high of {round(data['high'])} and low of {round(data['low'])}."
-    email_alert(msg)
-    print(msg)
+    wd = get_weather(city) # wd = weather data
+    msg = f'''Today is {wd['temp']}{wd['unit']} and {wd['desc']}.
+    \nThe high is {wd['high']}{wd['unit']} and the low is {wd['low']}{wd['unit']}.
+    \nPercipitation:{wd['percip']} Humidity:{wd['humid']} Wind Speed:{wd['wind']}'''
 
+    print(msg)
+    email_alert(msg)
 
 main()
