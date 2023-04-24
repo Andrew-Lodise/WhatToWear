@@ -15,16 +15,17 @@ def get_weather(query):
     dict['desc'] = r.html.find('div.VQF4g', first=True).find('span#wob_dc', first=True).text
     dict['high'] = int(r.html.find('div.gNCp2e', first=True).find('span.wob_t', first=True).text)
     dict['low'] = int(r.html.find('div.wNE31c', first=True).find('span.wob_t')[2].text)
-    dict['percip'] = r.html.find('div.wtsRwe', first=True).find('span#wob_pp', first=True).text
+    dict['percip'] = int((r.html.find('div.wtsRwe', first=True).find('span#wob_pp', first=True).text)[:-1])
+    dict['percip_unit'] = "%"
     dict['humid'] = r.html.find('div.wtsRwe', first=True).find('span#wob_hm', first=True).text
-    dict['wind'] = r.html.find('div.wtsRwe', first=True).find('span#wob_ws', first=True).text
+    dict['humid_unit'] = "%"
+    dict['wind'] = int((r.html.find('div.wtsRwe', first=True).find('span#wob_ws', first=True).text)[:-4])
+    dict['wind_unit'] = "mph"
     #msg format looks weird but works and keeps it not 1 long line
     dict['msg'] = f'''Today is {dict['temp']}{dict['unit']} and {dict['desc']}. 
 The high is {dict['high']}{dict['unit']} and the low is {dict['low']}{dict['unit']}.
-Percipitation:{dict['percip']} Humidity:{dict['humid']} Wind Speed:{dict['wind']}'''
+Percipitation:{dict['percip']}{dict['percip_unit']} Humidity:{dict['humid']}{dict['humid_unit']} Wind Speed:{dict['wind']}{dict['wind_unit']}'''
     return dict
-    #print(f"Current weather in {query}: {desc} {temp}{unit}")
-    #print(f"High: {high} \t Low: {low}")
 
-dict = get_weather("Philadelphia")
+#dict = get_weather("Philadelphia")
 #print(dict['msg'])
