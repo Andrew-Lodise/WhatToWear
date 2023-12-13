@@ -8,6 +8,6 @@ def main():
     wd = get_weather(city) # wd = weather data
 
     print(wd['msg'])
-    #email_alert(msg)
+    email_alert(wd['msg'])
 
 main()

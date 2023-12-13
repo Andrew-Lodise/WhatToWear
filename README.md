@@ -6,3 +6,9 @@ Link to Dockerhub repo: https://hub.docker.com/repository/docker/al964440/whatto
 
 Weather tutorial: https://youtu.be/cta1yCb3vA8
 Emailing tutorial: https://youtu.be/B1IsCbXp0uE
+
+Installation instruction
+-download python
+
+"pip install requests_html"
+ 
