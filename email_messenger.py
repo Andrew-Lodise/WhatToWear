@@ -1,7 +1,7 @@
 import smtplib
 from email.message import EmailMessage
 
-# this currently always sends it to my aol email from my gmail
+# this currently always sends it to my aol email from my gmail email
 class EmailMessenger:
     @staticmethod
     def send_email(body):
@@ -21,5 +21,3 @@ class EmailMessenger:
         server.send_message(msg)
 
         server.quit()
-
-# could make this into a more general class that could be used again if I wanted to email myself in another program

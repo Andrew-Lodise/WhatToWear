@@ -8,4 +8,5 @@ def main():
     philly_weatherman.print_weather_data() 
     EmailMessenger.send_email(philly_weatherman.output)
 
-main()
+if __name__ == "__main__":
+    main()
