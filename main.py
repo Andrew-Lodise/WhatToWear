@@ -1,13 +1,11 @@
-from WebScrapeWeather import get_weather
-from TextingTutorial import email_alert
+from weather_man import WeatherMan
+from email_messenger import EmailMessenger
 
 
 def main():
 
-    city = "Philadelphia"
-    wd = get_weather(city) # wd = weather data
-
-    print(wd['msg'])
-    email_alert(wd['msg'])
+    philly_weatherman = WeatherMan(city="Philadelphia")
+    philly_weatherman.print_weather_data() 
+    EmailMessenger.send_email(philly_weatherman.output)
 
 main()
