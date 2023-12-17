@@ -4,24 +4,24 @@ class WeatherMan:
 
     def __init__(self, city: str):
         self.city = city
-        self.output = ""
+        self.output = "\nWeather Output:\n"
         self.weather_data = {}
 
         self.fetch_weater_data()
         self.generate_output_message()
 
-    def print_weather_data(self): # might not need
+    def print_weather_output(self): # might not need
         print(self.output)
 
     def generate_output_message(self):
-        self.output = self.weather_data['msg'] = f'''Today is {self.weather_data['temp']}{self.weather_data['unit']} and {self.weather_data['desc']}. 
-High {self.weather_data['high']}{self.weather_data['unit']} 
-Low is {self.weather_data['low']}{self.weather_data['unit']}.
+        self.output += f'''Today is {self.weather_data['temp']}{self.weather_data['unit']} and {self.weather_data['desc']}. 
+High: {self.weather_data['high']}{self.weather_data['unit']} 
+Low: {self.weather_data['low']}{self.weather_data['unit']}
 Percipitation: {self.weather_data['percip']}{self.weather_data['percip_unit']} 
 Humidity: {self.weather_data['humid']}{self.weather_data['humid_unit']} 
 Wind Speed: {self.weather_data['wind']}{self.weather_data['wind_unit']}'''
     
-    def fetch_weater_data(self): #uses web scraping
+    def fetch_weater_data(self): #web scraping weather data function from google
         try:
             s = HTMLSession()
             url = f'https://www.google.com/search?q=weather+{self.city}'
