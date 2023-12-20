@@ -4,7 +4,7 @@ from email.message import EmailMessage
 # this currently always sends it to my aol email from my gmail email
 class EmailMessenger:
 
-    def __init__(self, weather_output, recommendation):
+    def __init__(self, weather_output: dict, recommendation: str):
         self.body = ""
         self.weather_output = weather_output
         self.recommedation = recommendation
