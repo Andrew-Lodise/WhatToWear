@@ -47,7 +47,7 @@ Wind Speed: {self.weather_data['wind']}mph'''
     def get_api_weather_data(self):
         try:
             api_key = "4f67253780c8307d71d96268f8cc314e"
-            city = "Secane"
+            city = self.city
 
             #step 1.) get longitude and latitude from city
             geo_url = f"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=5&appid={api_key}"

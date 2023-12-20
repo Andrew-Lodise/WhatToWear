@@ -36,6 +36,7 @@ class ClothingRecommender:
     
     def calculate_what_to_wear(self):
         target = self.data['high'] - ((self.data['high']-self.data['low'])*.3) # closer to the high because that's when people go out
+        target -= (self.data['wind']/2)
 
         if (target <= 30): # below 30
             self.update_selections(0, 0, 0, 0) # winter hat, winter coat, thick pants, winter boots
