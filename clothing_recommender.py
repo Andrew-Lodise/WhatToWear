@@ -1,4 +1,3 @@
-# This will be the class used to determine what one should wear for that day
 class ClothingRecommender:
 
     head_options = ["winter hat", "optional hat"]
@@ -19,9 +18,7 @@ class ClothingRecommender:
 
         self.calculate_what_to_wear()
         self.generate_recommendation()
-        
     
-
     def update_selections(self, h: int, t: int, l: int, f: int):
         self.head_selection = ClothingRecommender.head_options[h]
         self.torso_selection = ClothingRecommender.torso_options[t]

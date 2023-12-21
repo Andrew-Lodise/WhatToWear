@@ -1,16 +1,18 @@
 from requests_html import HTMLSession
 import requests
+import configparser
 
 class WeatherMan:
 
-    def __init__(self, city: str, method: int = 0):
-        self.city = city
+    def __init__(self):
         self.output = "\nWeather Output:\n"
         self.weather_data = {}
-        if (method==1): # uses api weather data if method is 1
+        self.read_config()
+
+        if (self.method==1): # uses api weather data if method is 1
             self.get_api_weather_data()
         else:
-            self.web_scrape_weater_data() # uses webscraped data by default
+            self.web_scrape_weather_data() # uses webscraped data by default
 
         self.generate_output_message() 
 
@@ -25,7 +27,7 @@ Low: {self.weather_data['low']}°F
 Humidity: {self.weather_data['humid']}% 
 Wind Speed: {self.weather_data['wind']}mph'''
     
-    def web_scrape_weater_data(self): #web scraping weather data function from google
+    def web_scrape_weather_data(self): #web scraping weather data function from google
         try:
             s = HTMLSession()
             url = f'https://www.google.com/search?q=weather+{self.city}'
@@ -46,18 +48,15 @@ Wind Speed: {self.weather_data['wind']}mph'''
 
     def get_api_weather_data(self):
         try:
-            api_key = "4f67253780c8307d71d96268f8cc314e"
-            city = self.city
-
             #step 1.) get longitude and latitude from city
-            geo_url = f"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=5&appid={api_key}"
+            geo_url = f"http://api.openweathermap.org/geo/1.0/direct?q={self.city}&limit=5&appid={self.api_key}"
             geo_response = requests.get(geo_url)
             geo_data = geo_response.json()
             lat = geo_data[0]["lat"]
             lon = geo_data[0]["lon"]
 
             #step 2.) get weather data 
-            url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely,alerts&units=imperial&appid={api_key}"
+            url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely,alerts&units=imperial&appid={self.api_key}"
             response = requests.get(url)
             data = response.json()
 
@@ -69,3 +68,12 @@ Wind Speed: {self.weather_data['wind']}mph'''
             self.weather_data["wind"] = data["daily"][0]["wind_speed"]
         except Exception as e:
             print(f"error fetching api data: {e}")
+
+
+    def read_config(self):
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+
+        self.api_key = config.get('WhatToWear', 'api_key')
+        self.city = config.get('WhatToWear', 'city')
+        self.method = int(config.get('WhatToWear', 'weather_source'))

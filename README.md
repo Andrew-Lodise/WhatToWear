@@ -5,6 +5,19 @@ This program, at 6am every day, retrieves weather data about my location using w
 
 I built this because I felt this was a process in my life that I could automate, and wanted to put my programming skills to the test.
 
+## How to run this program
+1. run these commands in your terminal or command prompt
+    - pip install python
+    - pip install requests_html
+2. edit config.ini file
+    - input your city
+    - input your email address 
+    - **optional** if you have a [OpenWeatherMap](https://openweathermap.org/) api key input your key
+        - change weather source to 1
+3. run this command in your terminal 
+    - python main.py
+    
+
 
 ## Links to other documents:
 - [Google doc](https://docs.google.com/document/d/1FkmB037FntJbgY8V3NB2TJgsuS_zxG-1/edit)
