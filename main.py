@@ -19,7 +19,7 @@ def main():
                                 recommendation=my_clothing_ai.recommendation)
     #print(my_mailman.body) #✔
     my_mailman.print_email() #✔
-    my_mailman.send_email() #✔ #
+    #my_mailman.send_email() #✔ 
 
 if __name__ == "__main__":
     main()

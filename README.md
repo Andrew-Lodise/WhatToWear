@@ -9,10 +9,11 @@ I built this because I felt this was a process in my life that I could automate,
 1. run these commands in your terminal or command prompt
     - pip install python
     - pip install requests_html
-2. edit config.ini file
+2. edit the "config.ini file
     - input your city
     - input your email address 
-    - **optional** if you have a [OpenWeatherMap](https://openweathermap.org/) api key input your key
+    - ***optional:*** if you have a [OpenWeatherMap](https://openweathermap.org/) api key input your key
+        - ***note:*** need to have one call api subscription
         - change weather source to 1
 3. run this command in your terminal 
     - python main.py
