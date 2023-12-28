@@ -7,8 +7,8 @@ I built this because I felt this was a process in my life that I could automate,
 
 ## How to run this program
 1. run these commands in your terminal or command prompt
-    - pip install python
-    - pip install requests_html
+    pip install python
+    pip install requests_html
 2. edit the "config.ini file
     - input your city
     - input your email address 
