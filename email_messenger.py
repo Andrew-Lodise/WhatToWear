@@ -1,14 +1,18 @@
-import smtplib
 import configparser
-from email.message import EmailMessage
+import smtplib
 
+
+from email.message import EmailMessage
+from weatherman import Weatherman
+from clothing_recommender import ClothingRecommender
 # this currently always sends it to my aol email from my gmail email
 class EmailMessenger:
 
-    def __init__(self, weather_output: dict, recommendation: str):
-        self.body = ""
-        self.weather_output = weather_output
-        self.recommedation = recommendation
+    def __init__(self, weatherman: Weatherman, clothing_recommender: ClothingRecommender):
+        self.weatherman = weatherman
+        self.body = f"Greetings from your What to Wear python project.\n"
+        self.weather_output = weatherman.output
+        self.recommendation = clothing_recommender.recommendation
         self.read_config()
         self.format_email()
     
@@ -35,7 +39,9 @@ class EmailMessenger:
         print(self.body)
     
     def format_email(self):
-        self.body += f"Greetings from your What to Wear python project.\n{self.weather_output}\n{self.recommedation}"
+        self.body += f"data retrieval method: {self.weatherman.method}\n\n"
+        self.body += f"{self.weather_output}\n\n"
+        self.body += f"{self.recommendation}"
 
     def read_config(self):
         config = configparser.ConfigParser()

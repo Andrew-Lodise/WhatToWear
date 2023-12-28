@@ -1,3 +1,5 @@
+from weatherman import Weatherman
+
 class ClothingRecommender:
 
     head_options = ["winter hat", "optional hat"]
@@ -7,9 +9,9 @@ class ClothingRecommender:
     foot_options = ["winter boots", "sneakers"]
 
 
-    def __init__(self, weather_data: dict):
-        self.data = weather_data
-        self.recommendation = "\nClothing Recommendation:\n"
+    def __init__(self, weather_man: Weatherman):
+        self.data = weather_man.weather_data
+        self.recommendation = "Clothing Recommendation:\n"
 
         self.head_selection = ""
         self.torso_selection = ""
@@ -31,9 +33,9 @@ class ClothingRecommender:
     def print_recommendation(self):
         print(self.recommendation)
     
-    def calculate_what_to_wear(self):
+    def calculate_what_to_wear(self): # difficult spot
         target = self.data['high'] - ((self.data['high']-self.data['low'])*.3) # closer to the high because that's when people go out
-        target -= (self.data['wind']/2)
+        target -= (self.data['wind']/2) # change in future
 
         if (target <= 30): # below 30
             self.update_selections(0, 0, 0, 0) # winter hat, winter coat, thick pants, winter boots

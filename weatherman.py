@@ -1,11 +1,12 @@
-from requests_html import HTMLSession
-import requests
 import configparser
+import requests
 
-class WeatherMan:
+from requests_html import HTMLSession
+
+class Weatherman:
 
     def __init__(self):
-        self.output = "\nWeather Output:\n"
+        self.output = "Weather Output:\n"
         self.weather_data = {}
         self.read_config()
 
@@ -17,9 +18,9 @@ class WeatherMan:
         self.generate_output_message() 
 
     def print_weather_output(self): 
-        print(F"weather data:\n{self.output}")
+        print(self.output)
 
-    def generate_output_message(self):
+    def generate_output_message(self): 
         self.output += f'''Current: {self.weather_data['temp']}°F
 Description: {self.weather_data['desc']}
 High: {self.weather_data['high']}°F 
@@ -27,7 +28,7 @@ Low: {self.weather_data['low']}°F
 Humidity: {self.weather_data['humid']}% 
 Wind Speed: {self.weather_data['wind']}mph'''
     
-    def web_scrape_weather_data(self): #web scraping weather data function from google
+    def web_scrape_weather_data(self): #retrieving weather data function from google
         try:
             s = HTMLSession()
             url = f'https://www.google.com/search?q=weather+{self.city}'
@@ -46,7 +47,8 @@ Wind Speed: {self.weather_data['wind']}mph'''
         except Exception as e:
             print(f"Error fetching weather data: {e}")
 
-    def get_api_weather_data(self):
+
+    def get_api_weather_data(self): #retrieving weather data from OpenWeatherMap api
         try:
             #step 1.) get longitude and latitude from city
             geo_url = f"http://api.openweathermap.org/geo/1.0/direct?q={self.city}&limit=5&appid={self.api_key}"
@@ -70,7 +72,7 @@ Wind Speed: {self.weather_data['wind']}mph'''
             print(f"error fetching api data: {e}")
 
 
-    def read_config(self):
+    def read_config(self): # reading config file to set city, api key, and method type 
         config = configparser.ConfigParser()
         config.read('config.ini')
 
