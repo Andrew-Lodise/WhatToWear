@@ -5,7 +5,7 @@ import smtplib
 from email.message import EmailMessage
 from weatherman import Weatherman
 from clothing_recommender import ClothingRecommender
-# this currently always sends it to my aol email from my gmail email
+# sends email to target email (from config.ini) from my gmail email
 class EmailMessenger:
 
     def __init__(self, weatherman: Weatherman, clothing_recommender: ClothingRecommender):

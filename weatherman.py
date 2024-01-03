@@ -1,5 +1,6 @@
 import configparser
 import requests
+from datetime import datetime
 
 from requests_html import HTMLSession
 
@@ -17,6 +18,10 @@ class Weatherman:
 
         self.generate_output_message() 
 
+    def get_todays_date() -> datetime:
+        cur_datetime = datetime.now()
+        return cur_datetime.strftime("%m-%d-%Y")
+
     def print_weather_output(self): 
         print(self.output)
 
@@ -28,7 +33,8 @@ Low: {self.weather_data['low']}°F
 Humidity: {self.weather_data['humid']}% 
 Wind Speed: {self.weather_data['wind']}mph'''
     
-    def web_scrape_weather_data(self): #retrieving weather data function from google
+
+    def web_scrape_weather_data(self): #retrievs weather data function from google
         try:
             s = HTMLSession()
             url = f'https://www.google.com/search?q=weather+{self.city}'
@@ -48,7 +54,7 @@ Wind Speed: {self.weather_data['wind']}mph'''
             print(f"Error fetching weather data: {e}")
 
 
-    def get_api_weather_data(self): #retrieving weather data from OpenWeatherMap api
+    def get_api_weather_data(self): #retrievs weather data from OpenWeatherMap api
         try:
             #step 1.) get longitude and latitude from city
             geo_url = f"http://api.openweathermap.org/geo/1.0/direct?q={self.city}&limit=5&appid={self.api_key}"

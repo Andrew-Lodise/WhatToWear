@@ -15,6 +15,8 @@ def main():
     #philly_weatherman.print_weather_output() #✔
     #print(philly_weatherman.weather_data) #✔
     #philly_weatherman.read_config() #✔
+    #philly_weatherman.get_todays_date() #✔
+    #print(Weatherman.get_todays_date())#✔
 
     # ClothingReccomender tests
     #print(my_clothing_ai.recommendation) #✔
