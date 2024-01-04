@@ -18,7 +18,7 @@ class Weatherman:
 
         self.generate_output_message() 
 
-    def get_todays_date() -> datetime:
+    def get_todays_date() -> str:
         cur_datetime = datetime.now()
         return cur_datetime.strftime("%m-%d-%Y")
 
@@ -80,7 +80,7 @@ Wind Speed: {self.weather_data['wind']}mph'''
 
     def read_config(self): # reading config file to set city, api key, and method type 
         config = configparser.ConfigParser()
-        config.read('config.ini')
+        config.read('config/config.ini')
 
         self.api_key = config.get('WhatToWear', 'api_key')
         self.city = config.get('WhatToWear', 'city')

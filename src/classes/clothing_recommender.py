@@ -1,7 +1,8 @@
-from weatherman import Weatherman
+from classes.weatherman import Weatherman
 
 class ClothingRecommender:
 
+    # should probably put these in a different class
     head_options = ["winter hat", "optional hat"]
     torso_options = ["winter coat", "heavy hoddie", "light hoddie",
                   "long sleeve shirt", "short sleeve shirt"]

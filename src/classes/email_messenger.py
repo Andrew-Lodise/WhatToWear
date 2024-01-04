@@ -3,8 +3,9 @@ import smtplib
 
 
 from email.message import EmailMessage
-from weatherman import Weatherman
-from clothing_recommender import ClothingRecommender
+
+from classes.weatherman import Weatherman
+from classes.clothing_recommender import ClothingRecommender
 # sends email to target email (from config.ini) from my gmail email
 class EmailMessenger:
 
@@ -45,6 +46,6 @@ class EmailMessenger:
 
     def read_config(self):
         config = configparser.ConfigParser()
-        config.read('config.ini')
+        config.read('config/config.ini')
 
         self.email = config.get('WhatToWear', 'email')

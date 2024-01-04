@@ -1,4 +1,6 @@
 date,weather_source, high, low, himidity, wind_speed, description, head, torso, leg, foot, comfort_level, comment
 01-02-2024,0,42.0,31.0,59,6.0, Clear, hat, long sleeve shirt, heavy joggers, sneakers,8, little cold
 01-02-2024,0,42.0,31.0,65,6.0,Clear,hat,light hoddie,sweat pants,boots,9,solid outfit
-01-02-2024,1,42.53,32.74,46,9.37,clear sky,None,long sleeve shirt,joggers,sneakers,8,chilly
+01-02-2024,1,42.53,32.74,46,9.37,clear sky,,long sleeve shirt,joggers,sneakers,8,chilly
+01-03-2024,1,42.67,32.32,55,8.1,scattered clouds,,heavy hoddie,joggers,boots,10,
+01-03-2024,1,42.82,32.32,55,7.56,scattered clouds,asd,asdf,asdf,asdf,asdf,asdf

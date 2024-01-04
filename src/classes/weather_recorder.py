@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from weatherman import Weatherman
+from classes.weatherman import Weatherman
 
 class WeatherRecorder:
     example_data = ["exp_data1", "exp_data2", "exp_data3", "exp_data4", "exp_data5"]
@@ -18,20 +18,21 @@ class WeatherRecorder:
     def ask_user(self):
         while (True):
             menu = f"enter one of the following options:\n"
-            menu += f"1.) view the data contents\n"
-            menu += f"2.) add a new line of data\n"
-            menu += f"3.) exit\n\t"
+            menu += f"1.) view the head of the data\n"
+            menu += f"2.) view all of the data\n"
+            menu += f"3.) add a new line of data\n"
+            menu += f"4.) exit\n\t"
 
             
             self.user_response = input(menu)
             # print(f"your response is {self.user_response}") # for debugging
 
-            if (self.user_response == "3"):
+            if (self.user_response == "4"):
                 break
             
             self.evaluate_response(self.user_response)
 
-    def get_user_response(self) -> list:
+    def get_user_row(self) -> list:
         date = Weatherman.get_todays_date()
         source = self.weatherman.method
         high = self.weatherman.weather_data['high'] 
@@ -48,17 +49,21 @@ class WeatherRecorder:
         return [date, source, high, low, humid, wind, desc, head, torso, leg, foot, cl, cm]
 
 
+    def print_df_head(self):
+        print(self.df.head(3))
+
+    def print_df(self):
+        print(self.df)
+
     def evaluate_response(self, response: str):
         if (response == "1"):
-            print(self.df)
-            # asks user what they want to do again
-            #pass
-        elif (response == "2"):
-            self.add_row(self.get_user_response())
-            #pass
+            self.print_df_head()
+        elif(response == "2"):
+            self.print_df()
+        elif (response == "3"):
+            self.add_row(self.get_user_row())
         else:
             print("invalid response")
-            #pass
 
     def get_data(self): #✔
         if ".csv" in self.csv_file:
