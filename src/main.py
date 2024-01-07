@@ -1,17 +1,18 @@
 from classes.clothing_recommender import ClothingRecommender
-from classes.email_messenger import EmailMessenger
 from classes.weatherman import Weatherman
 from classes.weather_recorder import WeatherRecorder
+
+from classes.email_sender import EmailSender
 
 def main():
 
     #main method contents
-    philly_weatherman = Weatherman() # gets location and source from config file
-    my_clothing_ai = ClothingRecommender(philly_weatherman)
-    my_emailman = EmailMessenger(philly_weatherman, my_clothing_ai) 
+    #philly_weatherman = Weatherman() # gets location and source from config file
+    #my_clothing_ai = ClothingRecommender(philly_weatherman)
+    #my_emailman = EmailMessenger(philly_weatherman, my_clothing_ai) 
 
     #weather recorder
-    secretary = WeatherRecorder("data/data.csv", "data/data_copy.xlsx")
+    #secretary = WeatherRecorder("data/data.csv", "data/data_copy.xlsx")
     
     # WeatherMan tests
     #philly_weatherman.get_api_weather_data()
@@ -35,6 +36,14 @@ def main():
     #secretary.add_row(WeatherRecorder.example_data) #✔
     #secretary.save_file() #✔
     #secretary.ask_user() #✔
+    
+    #--- main after refactoring ----
+    philly_weatherman = Weatherman() # gets location and source from config file
+    my_clothing_ai = ClothingRecommender(philly_weatherman)
+
+    email_sender = EmailSender([philly_weatherman.output, my_clothing_ai.recommendation])
+    print(email_sender.body) #✔
+    #email_sender.send_email() #✔
 
 if __name__ == "__main__":
     main()
