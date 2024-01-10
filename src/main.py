@@ -1,6 +1,7 @@
 from classes.clothing_recommender import ClothingRecommender
 from classes.weatherman import WeatherMan
 from classes.weather_recorder import WeatherRecorder
+from classes.csv_worker import CsvWorker
 
 from classes.email_sender import EmailSender
 
@@ -40,11 +41,21 @@ def main():
     #--- main after refactoring ----
     weatherman = WeatherMan() # gets location and source from config file
     clothing_recommender = ClothingRecommender(weatherman)
-    email_sender = EmailSender([weatherman.output, clothing_recommender.recommendation],)
+    email_sender = EmailSender([weatherman.output, clothing_recommender.recommendation])
 
     #Email sender tests
-    print(email_sender.body) #✔
+    #print(email_sender.body) #✔
     #email_sender.send_email() #✔
+
+    #Csv worker tests
+    cw = CsvWorker("data/test.csv")
+    #cw.add_row(["pdata1", "pdata2", "pdata3", "pandas4"]) #✔
+    #cw.delete_row(row_index=0) #✔
+    #cw.delete_row(last=True) #✔
+    #cw.delete_row(10) #✔
+    cw.add_row(1999)
+    
+
 
 if __name__ == "__main__":
     main()

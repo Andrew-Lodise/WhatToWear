@@ -73,7 +73,7 @@ class WeatherRecorder:
         else:
             print("can't open file of that type. Must be have .csv extension.")
 
-    def add_row(self, txt: str): #✔
+    def add_row(self, txt): #✔
         #example_data = ["exp_data1", "exp_data2", "exp_data3"] #✔
         self.df.loc[len(self.df.index)] = txt #✔
         self.save_file()

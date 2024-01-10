@@ -57,4 +57,4 @@ class EmailSender:
             self.intro = config.get('WhatToWear', 'intro')
             self.subject = config.get('WhatToWear', 'subject')
         except Exception as e:
-            logging.error(f"Error reading configuration: {e}")
+            logging.error(f"Error reading configuration: {e}. make sure all fiels are filled in with no qutation marks")
