@@ -1,12 +1,12 @@
 import pandas as pd
 import numpy as np
-from classes.weatherman import Weatherman
+from classes.weatherman import WeatherMan
 
 class WeatherRecorder:
     example_data = ["exp_data1", "exp_data2", "exp_data3", "exp_data4", "exp_data5"]
 
     def __init__(self, csv_file, excel_file):
-        self.weatherman = Weatherman()
+        self.weatherman = WeatherMan()
         self.csv_file = csv_file
         self.excel_file = excel_file
 
@@ -33,7 +33,7 @@ class WeatherRecorder:
             self.evaluate_response(self.user_response)
 
     def get_user_row(self) -> list:
-        date = Weatherman.get_todays_date()
+        date = WeatherMan.get_todays_date()
         source = self.weatherman.method
         high = self.weatherman.weather_data['high'] 
         low = self.weatherman.weather_data['low']

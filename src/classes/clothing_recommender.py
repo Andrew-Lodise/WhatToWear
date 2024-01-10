@@ -1,4 +1,4 @@
-from classes.weatherman import Weatherman
+from classes.weatherman import WeatherMan
 
 class ClothingRecommender:
 
@@ -10,7 +10,7 @@ class ClothingRecommender:
     foot_options = ["winter boots", "sneakers"]
 
 
-    def __init__(self, weather_man: Weatherman):
+    def __init__(self, weather_man: WeatherMan):
         self.data = weather_man.weather_data
         self.recommendation = "Clothing Recommendation:\n"
 

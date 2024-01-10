@@ -2,6 +2,7 @@ import configparser
 import smtplib
 from email.message import EmailMessage
 import logging
+
 '''
 Reuseable class that sends emails, given a list of paragraphs as it's input.
 Also needs a config.ini file for the user email and password, 
@@ -16,9 +17,9 @@ class EmailSender:
 
         self.read_config()
         self.body = f"{self.intro}\n\n"
-        self.format_body()
+        self.generate_body()
 
-    def format_body(self):
+    def generate_body(self):
         for i, paragraph in enumerate(self.content):
             if i != len(self.content) -1:
                 self.body += f"{paragraph}\n\n"

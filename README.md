@@ -5,7 +5,7 @@ This program, at 6am every day, retrieves weather data about my location, using 
 
 I built this because I felt this was a process in my life that I could automate, and wanted to put my programming skills to the test.
 
-## How to run this program
+## Installation guide
 1. run these commands in your terminal or command prompt
     - pip install python
     - pip install requests_html

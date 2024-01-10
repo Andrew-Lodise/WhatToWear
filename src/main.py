@@ -1,5 +1,5 @@
 from classes.clothing_recommender import ClothingRecommender
-from classes.weatherman import Weatherman
+from classes.weatherman import WeatherMan
 from classes.weather_recorder import WeatherRecorder
 
 from classes.email_sender import EmailSender
@@ -38,10 +38,11 @@ def main():
     #secretary.ask_user() #✔
     
     #--- main after refactoring ----
-    philly_weatherman = Weatherman() # gets location and source from config file
-    my_clothing_ai = ClothingRecommender(philly_weatherman)
+    weatherman = WeatherMan() # gets location and source from config file
+    clothing_recommender = ClothingRecommender(weatherman)
+    email_sender = EmailSender([weatherman.output, clothing_recommender.recommendation],)
 
-    email_sender = EmailSender([philly_weatherman.output, my_clothing_ai.recommendation])
+    #Email sender tests
     print(email_sender.body) #✔
     #email_sender.send_email() #✔
 
