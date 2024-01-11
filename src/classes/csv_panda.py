@@ -1,12 +1,12 @@
 import pandas as pd
-import numpy as np
 
 '''
-This is a class I designed to work with a csv file and a pandas df
+This is a class designed to connect a csv file and a pandas df
 it has simple functionality like add row, delete row, ect.
+autosave is implemented whener a row is added or deleted
 '''
 
-class CsvWorker:
+class CsvPanda:
 
     def __init__(self, csv_file):
         self.csv_file = csv_file

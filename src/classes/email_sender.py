@@ -1,13 +1,21 @@
 import configparser
 import smtplib
 from email.message import EmailMessage
-import logging
 
 '''
 Reuseable class that sends emails, given a list of paragraphs as it's input.
-Also needs a config.ini file for the user email and password, 
-email services host adress (smtp.gmail.com for gmail) and port (587 for gmail), 
-the recipients email, the subject for the email,and an optional intro message.
+Needs a config.ini file setup like this
+
+config/config.ini
+[EmailSender]
+user_email = enter username here
+password = enter password here
+host = smtp.gmail.com 
+port = 587
+
+recipient_email = recipient@recipient.com
+subject = email subject
+intro = first line of email
 '''
 
 class EmailSender:
@@ -20,6 +28,10 @@ class EmailSender:
         self.generate_body()
 
     def generate_body(self):
+        if type(self.content) != list:
+            print("Error: content is not a list")
+            exit()
+
         for i, paragraph in enumerate(self.content):
             if i != len(self.content) -1:
                 self.body += f"{paragraph}\n\n"
@@ -39,22 +51,28 @@ class EmailSender:
                 server.starttls()
                 server.login(self.user_email, self.password)
                 server.send_message(msg)
+
         except Exception as e:
-            logging.error(f"Error sending email: {e}")
+            print(f"Error: {e}")
 
     def read_config(self):
         config = configparser.ConfigParser()
         try:
             config.read('config/config.ini')
 
-            self.user_email = config.get('WhatToWear', 'user_email')
-            self.password = config.get('WhatToWear', 'password')
+            self.user_email = config.get('EmailSender', 'user_email')
+            self.password = config.get('EmailSender', 'password')
 
-            self.host = config.get('WhatToWear', 'host')
-            self.port = int(config.get('WhatToWear', 'port'))
+            self.host = config.get('EmailSender', 'host')
+            self.port = int(config.get('EmailSender', 'port'))
 
-            self.recipient_email = config.get('WhatToWear', 'recipient_email')
-            self.intro = config.get('WhatToWear', 'intro')
-            self.subject = config.get('WhatToWear', 'subject')
-        except Exception as e:
-            logging.error(f"Error reading configuration: {e}. make sure all fiels are filled in with no qutation marks")
+            self.recipient_email = config.get('EmailSender', 'recipient_email')
+            self.intro = config.get('EmailSender', 'intro')
+            self.subject = config.get('EmailSender', 'subject')
+        except AttributeError as e:
+            print(f"Error reading config file: {e}")
+            quit()
+        
+        except configparser.NoSectionError as e:
+            print(f"Error reading config file: {e}")
+            quit()

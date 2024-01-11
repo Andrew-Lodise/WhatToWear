@@ -3,19 +3,38 @@ import requests
 from datetime import datetime
 from requests_html import HTMLSession
 
+'''
+Reuseable class that has the ability to get weather data from either
+web scraping it from google or with Open Weather Map api (key needed)
+it requires a config file setup like this
+
+config/config.ini
+[Weatherman]
+city = Secane
+api_key = 4f67253780c8307d71d96268f8cc314e
+weather_source = web
+# ^default for OpenWeatherMap api, web for google search
+
+it tracks the following datapoints
+Current weather
+Description
+High
+Low
+Humidity
+Wind Speed
+'''
 class WeatherMan:
 
     def __init__(self):
         self.output = "Weather Output:\n"
         self.weather_data = {}
+        self.method = "default"
         self.read_config()
 
-        if (self.method=="api"): 
-            self.get_api_weather_data()
-        elif (self.method=="web"):
+        if (self.method=="web"):
             self.web_scrape_weather_data() 
         else:
-            print("invalid method to get weather data")
+            self.get_api_weather_data()
 
         self.generate_output_message() 
 
@@ -27,7 +46,7 @@ class WeatherMan:
 
     def generate_output_message(self): 
         self.output += f"Source: {self.method}\n"
-        self.output += f"Today is: {WeatherMan.get_todays_date()}\n"
+        self.output += f"Today's date: {WeatherMan.get_todays_date()}\n"
         self.output += f"Current: {self.weather_data['temp']}°F\n"
         self.output += f"Description: {self.weather_data['desc']}\n"
         self.output += f"High: {self.weather_data['high']}°F\n"
@@ -52,8 +71,9 @@ class WeatherMan:
             self.weather_data['humid'] = int(r.html.find('div.wtsRwe', first=True).find('span#wob_hm', first=True).text[:-1])
             self.weather_data['wind'] = int((r.html.find('div.wtsRwe', first=True).find('span#wob_ws', first=True).text)[:-4])
 
-        except Exception as e:
-            raise RuntimeError(f"Error fetching weather data: {e}")
+        except AttributeError as e:
+            print("Error: Invalid City, edit config file")
+            quit()
 
 
     def get_api_weather_data(self): #retrievs weather data from OpenWeatherMap api
@@ -76,8 +96,9 @@ class WeatherMan:
             self.weather_data["low"] = data["daily"][0]["temp"]["min"]
             self.weather_data["humid"] = data["daily"][0]["humidity"]
             self.weather_data["wind"] = data["daily"][0]["wind_speed"]
-        except Exception as e:
-            raise RuntimeError("error fetching api data: {e}")
+        except KeyError as e:
+            print(f"Error while fetching api data: make sure your api key is correct")
+            exit()
 
 
     def read_config(self): # reading config file to set city, api key, and method type 
@@ -85,8 +106,12 @@ class WeatherMan:
             config = configparser.ConfigParser()
             config.read('config/config.ini')
 
-            self.api_key = config.get('WhatToWear', 'api_key')
-            self.city = config.get('WhatToWear', 'city')
-            self.method = config.get('WhatToWear', 'weather_source')
-        except Exception as e:
-            raise RuntimeError(f"Error reading configuration: {e}")
+            self.api_key = config.get('Weatherman', 'api_key')
+            self.city = config.get('Weatherman', 'city')
+            self.method = config.get('Weatherman', 'weather_source')
+        except configparser.NoOptionError as e:
+            print(f"Error reading config file: {e}")
+            exit()
+        except configparser.NoSectionError as e:
+            print(f"Error reading config file: {e}")
+            exit()
