@@ -5,17 +5,18 @@ from classes.csv_panda import CsvPanda
 
 class Menu:
     def __init__(self):
-        self.output = ["View the data", "add a new line of data", "delete a row"]
         self.weatherman = WeatherMan()
         self.csv_panda = CsvPanda("data/data.csv")
-        self.selections =f'''1.) view the data\n2.) add a new line of data\n3.) exit\n\t'''
+        self.selections = ["View the data", "add a new line of data", "delete a row"]
+        self.output = "Main Menu:\n"
+        self.output += '''1.) view the data\n2.) add a new line of data\n3.) exit\n\t'''
 
         self.user_response = 0
 
     def run(self):
         while (True):
 
-            self.user_response = input(self.selections)
+            self.user_response = input(self.output)
             # print(f"your response is {self.user_response}") # for debugging
             
             self.evaluate_response(self.user_response)
@@ -32,9 +33,11 @@ class Menu:
         torso = input("torso: ")
         leg = input("leg: ")
         foot = input("foot: ")
+        t = input("task: ")
         cl = input("cofort level: ")
         cm = input("comment: ")
-        return [date, source, high, low, humid, wind, desc, head, torso, leg, foot, cl, cm]
+        return [date, source, high, low, humid, wind, desc, head, torso, leg, foot, t, cl, cm]
+
     
     def evaluate_response(self, response: str):
         if (response == "1"):
