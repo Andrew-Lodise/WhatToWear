@@ -1,5 +1,7 @@
-#todo list for what to wear project
-
+# todo list for what to wear project
+1. implement a wardrobe 
+2. implement a tkinter ui
+3. forget the menu
 3. add a "delete last row" method to menu
 4. make tasks and other things lists not just lines
 5. make the menu response multiple choice
