@@ -25,8 +25,9 @@ Wind Speed
 '''
 class WeatherMan:
 
-    def __init__(self):
+    def __init__(self, city: str):
         self.output = "Weather Output:\n"
+        self.city = city
         self.weather_data = {}
         self.method = "default"
         self.read_config()
@@ -113,7 +114,7 @@ class WeatherMan:
             config.read('config/config.ini')
 
             self.api_key = config.get('Weatherman', 'api_key')
-            self.city = config.get('Weatherman', 'city')
+            #self.city = config.get('Weatherman', 'city')
             self.method = config.get('Weatherman', 'weather_source')
         except configparser.NoOptionError as e:
             print(f"Error reading config file: {e}")

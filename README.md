@@ -1,7 +1,10 @@
 # What to Wear
 
 ## Description:
+### Old 
 This program, at 6am every day, retrieves weather data about my location, using either webscraping or Open WeatherMap's api. The program then processes that information in order to calculate and tell me, through email, what I should wear that day.
+### new
+this program has two parts, one will be a tkinter ui that allows you to customize your wardrobe and generates a outfit for you based on the weather from your location, obtained by a either api or web. you have the option to email yourself with this too 
 
 I built this because I felt this was a process in my life that I could automate, and wanted to put my programming skills to the test.
 
