@@ -36,12 +36,18 @@ class WeatherMan:
         else:
             self.get_api_weather_data()
 
+        self.generate_target_temp()
         self.generate_output_message() 
 
     @staticmethod
     def get_todays_date() -> str:
         cur_datetime = datetime.now()
         return cur_datetime.strftime("%m-%d-%Y")
+    
+    def generate_target_temp(self):
+        h = self.weather_data['high']
+        l = self.weather_data['low']
+        self.target = l + ((h - l) *.8)
 
 
     def generate_output_message(self): 
