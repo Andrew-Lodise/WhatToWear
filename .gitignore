@@ -2,3 +2,4 @@ __pycache__/
 notes/
 Docker/
 .venv/
+.DS_Store
