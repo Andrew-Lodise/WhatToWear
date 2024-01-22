@@ -106,6 +106,9 @@ class WeatherMan:
         except KeyError as e:
             print(f"Error while fetching api data: make sure your api key is correct")
             exit()
+        #except IndexError as e:
+            #print("Error: City does not exsist")
+            #exit()
 
 
     def read_config(self): # reading config file to set city, api key, and method type 
