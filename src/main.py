@@ -7,21 +7,16 @@ from classes.tk_ui import Tk_ui
 def main():
 
     wm = WeatherMan(city="Secane", source=1)
-    #os = OutfitRecommender()
-    #temp = wm.get_target()
-    email_sender = EmailSender([wm.output, "para2"]) #os.recommendation
+    os = OutfitRecommender()
+    os.set_temp(wm.get_target())
+    email_sender = EmailSender([wm.output, os.recommendation])
 
     # test the ui
     gotk = Tk_ui()
 
-    # to manipulate csv
-    #m.run() #✔
-
-    # to setup what to wear
+    # EmailSender tests
     #print(email_sender.body) #✔
     #email_sender.send_email() #✔
-
-
 
 if __name__ == "__main__":
     main()

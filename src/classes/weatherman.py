@@ -8,15 +8,8 @@ Reuseable class that has the ability to get weather data from either
 web scraping it from google or with Open Weather Map api (key needed)
 it requires a config file setup like this
 
-config/config.ini
-[Weatherman]
-city = Secane
-api_key = 4f67253780c8307d71d96268f8cc314e
-weather_source = web
-# ^default for OpenWeatherMap api, web for google search
-
 it tracks the following datapoints
-Current weather
+Current temp
 Description
 High
 Low
@@ -40,11 +33,13 @@ class WeatherMan:
 
         self.generate_output_message() 
 
+
     @staticmethod
     def get_todays_date() -> str:
         cur_datetime = datetime.now()
         return cur_datetime.strftime("%m-%d-%Y")
     
+
     def get_target(self):
         h = self.weather_data['high']
         l = self.weather_data['low']
@@ -56,7 +51,6 @@ class WeatherMan:
 
     def generate_output_message(self): 
         try:
-
             source_name = "API" if self.method == 0 else "Web"
             self.output += f"Source: {source_name}\n"
             self.output += f"Today's date: {WeatherMan.get_todays_date()}\n"
@@ -68,6 +62,7 @@ class WeatherMan:
             self.output += f"Wind Speed: {self.weather_data['wind']}mph"
         except KeyError as e:
             raise KeyError
+
 
     def web_scrape_weather_data(self): #retrievs weather data function from google
         try:
@@ -81,13 +76,11 @@ class WeatherMan:
             self.weather_data['desc'] = r.html.find('div.VQF4g', first=True).find('span#wob_dc', first=True).text
             self.weather_data['high'] = int(r.html.find('div.gNCp2e', first=True).find('span.wob_t', first=True).text)
             self.weather_data['low'] = int(r.html.find('div.wNE31c', first=True).find('span.wob_t')[2].text)
-            #self.weather_data['percip'] = int((r.html.find('div.wtsRwe', first=True).find("span#wob_pp", first=True).text)[:-1]) # don't want to use anymore
             self.weather_data['humid'] = int(r.html.find('div.wtsRwe', first=True).find('span#wob_hm', first=True).text[:-1])
             self.weather_data['wind'] = int((r.html.find('div.wtsRwe', first=True).find('span#wob_ws', first=True).text)[:-4])
 
         except (AttributeError, KeyError) as e:
             raise KeyError
-            
 
 
     def get_api_weather_data(self): #retrievs weather data from OpenWeatherMap api
@@ -119,10 +112,7 @@ class WeatherMan:
         try:
             config = configparser.ConfigParser()
             config.read('config/config.ini')
-
             self.api_key = config.get('Weatherman', 'api_key')
-            #self.city = config.get('Weatherman', 'city') #moved these to ui widgets
-            #self.method = config.get('Weatherman', 'weather_source')
         except configparser.NoOptionError as e:
             print(f"Error reading config file: {e}")
             exit()

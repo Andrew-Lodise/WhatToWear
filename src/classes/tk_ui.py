@@ -4,7 +4,6 @@ from classes.outfit_recommender import OutfitRecommender
 
 class Tk_ui:
     def __init__(self):
-
         #setup the root
         self.root = tk.Tk()
         self.root.title("What to Wear")
@@ -21,6 +20,7 @@ class Tk_ui:
         self.frame1()
         self.root.mainloop()
 
+
     def update_weather_output(self, event=None):
         city = self.city_searched.get()
         
@@ -36,6 +36,7 @@ class Tk_ui:
                 self.weather_man = None
                 self.weather_output.set("Error: Unknown city")
             
+
     def update_clothing_rec(self):
         if self.weather_man != None:
             self.outfit_recommender = OutfitRecommender()
@@ -43,6 +44,7 @@ class Tk_ui:
             self.clothing_rec.set(self.outfit_recommender.recommendation) 
         else:
             self.clothing_rec.set("Error: provide weather info first")
+
 
     def frame1(self):
         # frame widget for the main ui
@@ -66,7 +68,7 @@ class Tk_ui:
             font=("Arial Bold ", 36)
             ).pack(pady=5)
 
-        # frame widget to place get city input and label
+        # frame widget to place "get city" input and label
         questionair_frame = tk.Frame(self.mainframe, bg=self.bg_color)
         questionair_frame.pack(pady=10)
 
@@ -114,12 +116,11 @@ class Tk_ui:
             background = self.bg_color, 
             foreground = "black",
             value=1).grid(row=1, column=0, sticky=tk.W, padx=15)
-        
+        # frame widget to place weather and clothing buttons and outputs
         output_frame = tk.Frame(
             self.mainframe,
             background=self.bg_color)
         output_frame.pack(pady=10)
-
         # button widget to "generate the weather data"
         generate_weather_info_button = tk.Button(
             output_frame,
