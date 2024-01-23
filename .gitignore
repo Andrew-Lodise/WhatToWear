@@ -3,3 +3,5 @@ notes/
 Docker/
 .venv/
 .DS_Store/
+test_folder
+src/config/config.ini
