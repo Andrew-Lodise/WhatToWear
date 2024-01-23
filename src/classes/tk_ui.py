@@ -14,7 +14,7 @@ class Tk_ui:
         self.city_searched = tk.StringVar()
         self.weather_output = tk.StringVar()
         self.clothing_rec = tk.StringVar()
-        self.source = tk.StringVar(value=0)
+        self.source = tk.StringVar(value=1)
         self.weather_man = None
         
         #running the tkinter object

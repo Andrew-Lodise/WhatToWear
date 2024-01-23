@@ -112,7 +112,7 @@ class WeatherMan:
             self.weather_data["wind"] = data["daily"][0]["wind_speed"]
         except KeyError as e:
             print(f"Error while fetching api data: make sure your api key is correct")
-            exit()
+            raise KeyError(e)
 
 
     def read_config(self): # reading config file to set city, api key, and method type 

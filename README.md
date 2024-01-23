@@ -9,19 +9,16 @@ this program has two parts, one will be a tkinter ui that allows you to customiz
 I built this because I felt this was a process in my life that I could automate, and wanted to put my programming skills to the test.
 
 ## Installation guide
-1. update your pip with
-    python.exe -m pip install --upgrade pip
-
-2. install dependencies with
+1. install dependencies with
     pip install -r requirements.txt
 
-3. fill out config file with your information
+2. fill out config file with your information
     [for OpenWeatherMap api key](https://openweathermap.org/)
 
-4. navigate to scr folder with
+3. navigate to scr folder with
     cd src
 
-5. run main.py with
+4. run main.py with
     python main.py
     
 ## future improvements
