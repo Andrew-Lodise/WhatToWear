@@ -1,4 +1,3 @@
-
 class Outfit:
     output = ""
 
@@ -11,6 +10,7 @@ class Outfit:
         self.low = low
     
     def __str__(self):
+        self.output = ""
         self.output += f"Head: {self.head}\n"
         self.output += f"Torso: {self.torso}\n"
         self.output += f"Leg: {self.leg}\n"

@@ -24,8 +24,9 @@ class OutfitRecommender:
         
         self.outfit_list = []  # Clear the outfit list before adding new recommendations
         for outfit in Outfits.outfits:
+            #print(f"self.temp: {self.temp}, {type(self.temp)}")
             try:
                 if outfit.low <= self.temp <= outfit.high:
                     self.outfit_list.append(outfit)
             except TypeError as e:
-                print("Error: cant recomend outfit")
+                print(f"Error: cant recomend outfit:{e}")

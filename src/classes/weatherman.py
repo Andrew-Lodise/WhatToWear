@@ -49,9 +49,9 @@ class WeatherMan:
         h = self.weather_data['high']
         l = self.weather_data['low']
         if h is not None and l is not None:
-            self.target = float(l + ((h - l) *.8))
+            return float(l + ((h - l) *.8))
         else:
-            self.target = None
+            return None
 
 
     def generate_output_message(self): 
