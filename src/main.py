@@ -1,15 +1,17 @@
 from classes.email_sender import EmailSender
-from classes.menu import Menu
 from classes.outfit_recommender import OutfitRecommender
 from classes.weatherman import WeatherMan
+from classes.tk_ui import Tk_ui
 
 
 def main():
 
-    weatherman = WeatherMan()
-    os = OutfitRecommender(weatherman.target)
+    weatherman = WeatherMan(city="Secane")
+    os = OutfitRecommender()
+    os.set_temp(weatherman.target)
     email_sender = EmailSender([weatherman.output, os.recommendation])
-    m = Menu()
+
+    gotk = Tk_ui()
 
     # to manipulate csv
     #m.run() #✔

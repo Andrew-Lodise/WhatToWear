@@ -24,15 +24,15 @@ Humidity
 Wind Speed
 '''
 class WeatherMan:
-
-    def __init__(self, city: str):
+    # source = 0 for api, source = 1 for web scrape
+    def __init__(self, city: str, source: int = 1):
         self.output = "Weather Output:\n"
         self.city = city
         self.weather_data = {}
-        self.method = "default"
+        self.method = source
         self.read_config()
 
-        if (self.method=="web"):
+        if (self.method==1):
             self.web_scrape_weather_data() 
         else:
             self.get_api_weather_data()
@@ -48,11 +48,13 @@ class WeatherMan:
     def generate_target_temp(self):
         h = self.weather_data['high']
         l = self.weather_data['low']
-        self.target = l + ((h - l) *.8)
+        self.target = float(l + ((h - l) *.8))
 
 
     def generate_output_message(self): 
-        self.output += f"Source: {self.method}\n"
+
+        source_name = "API" if self.method == 0 else "Web"
+        self.output += f"Source: {source_name}\n"
         self.output += f"Today's date: {WeatherMan.get_todays_date()}\n"
         self.output += f"Current: {self.weather_data['temp']}°F\n"
         self.output += f"Description: {self.weather_data['desc']}\n"
@@ -78,9 +80,9 @@ class WeatherMan:
             self.weather_data['humid'] = int(r.html.find('div.wtsRwe', first=True).find('span#wob_hm', first=True).text[:-1])
             self.weather_data['wind'] = int((r.html.find('div.wtsRwe', first=True).find('span#wob_ws', first=True).text)[:-4])
 
-        except AttributeError as e:
+        except (AttributeError, KeyError) as e:
             print("Error: Invalid City, edit config file")
-            quit()
+            
 
 
     def get_api_weather_data(self): #retrievs weather data from OpenWeatherMap api
@@ -106,9 +108,6 @@ class WeatherMan:
         except KeyError as e:
             print(f"Error while fetching api data: make sure your api key is correct")
             exit()
-        #except IndexError as e:
-            #print("Error: City does not exsist")
-            #exit()
 
 
     def read_config(self): # reading config file to set city, api key, and method type 
@@ -117,8 +116,8 @@ class WeatherMan:
             config.read('config/config.ini')
 
             self.api_key = config.get('Weatherman', 'api_key')
-            #self.city = config.get('Weatherman', 'city')
-            self.method = config.get('Weatherman', 'weather_source')
+            #self.city = config.get('Weatherman', 'city') #moved these to ui widgets
+            #self.method = config.get('Weatherman', 'weather_source')
         except configparser.NoOptionError as e:
             print(f"Error reading config file: {e}")
             exit()

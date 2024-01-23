@@ -4,12 +4,15 @@ from classes.weatherman import WeatherMan
 from classes.csv_panda import CsvPanda
 
 class Menu:
+    pass
+#depricated
+'''
     def __init__(self):
         self.weatherman = WeatherMan()
         self.csv_panda = CsvPanda("data/data.csv")
         self.selections = ["View the data", "add a new line of data", "delete a row"]
         self.output = "Main Menu:\n"
-        self.output += '''1.) view the data\n2.) add a new line of data\n3.) exit\n\t'''
+        self.output += 1.) view the data\n2.) add a new line of data\n3.) exit\n\t
 
         self.user_response = 0
 
@@ -50,4 +53,4 @@ class Menu:
             quit()
         else:
             print("invalid response")
-
+'''
