@@ -6,11 +6,12 @@ from classes.tk_ui import Tk_ui
 
 def main():
 
-    weatherman = WeatherMan(city="Secane")
-    os = OutfitRecommender()
-    os.set_temp(weatherman.target)
-    email_sender = EmailSender([weatherman.output, os.recommendation])
+    wm = WeatherMan(city="Secane", source=1)
+    #os = OutfitRecommender()
+    #temp = wm.get_target()
+    email_sender = EmailSender([wm.output, "para2"]) #os.recommendation
 
+    # test the ui
     gotk = Tk_ui()
 
     # to manipulate csv

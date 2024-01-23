@@ -14,7 +14,6 @@ class Tk_ui:
         self.city_searched = tk.StringVar()
         self.weather_output = tk.StringVar()
         self.source = tk.StringVar(value=0)
-        self.clothing_rec = tk.StringVar()
         
         #running the tkinter object
         self.frame1()
@@ -22,22 +21,20 @@ class Tk_ui:
 
     def update_weather_output(self):
         city = self.city_searched.get()
-        try:
-            if not city:
-                self.weather_output.set("Error: Enter a city in the box above")
-            else:
+        
+        if not city:
+            self.weather_man = None
+            self.weather_output.set("Error: Enter a city in the box above")
+        else:
+            try:
                 self.weather_man = WeatherMan(city, int(self.source.get()))
+                
                 self.weather_output.set(self.weather_man.output)
-        except (IndexError, AttributeError) as e:
-            self.weather_output.set("Error: location not found")
-
-    def update_what_to_wear(self):
-        try:
-            self.recommender = OutfitRecommender()
-            self.recommender.set_temp(self.weather_man.target)
-            self.clothing_rec.set(self.recommender.recommendation)
-        except AttributeError as e:
-            self.clothing_rec.set("Error: Must generate weather first")
+            except (KeyError, IndexError):
+                self.weather_man = None
+                self.weather_output.set("Error: Unknown city")
+            
+        
 
     def frame1(self):
         # frame widget for the main ui
@@ -124,24 +121,4 @@ class Tk_ui:
             background=self.bg_color,
             foreground="black"
         ).pack(pady=10)
-
-        # button widget for "Generate What to Wear"
-
-        generate_what_to_wear_button = tk.Button(
-            self.mainframe,
-            text = "Generate what to wear",
-            font = ("Arial", 20),
-            background=self.bg_color,
-            command = self.update_what_to_wear 
-            ).pack(pady=10)
-        
-        # label widget that displays what to wear
-        self.what_to_wear_info = tk.Label(
-            self.mainframe,
-            textvariable = self.clothing_rec,
-            font = ("Arial", 18),
-            background=self.bg_color,
-            foreground="black"
-        ).pack(pady=10)
-
 

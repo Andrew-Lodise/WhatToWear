@@ -31,13 +31,13 @@ class WeatherMan:
         self.weather_data = {}
         self.method = source
         self.read_config()
+        self.target = None
 
         if (self.method==1):
             self.web_scrape_weather_data() 
         else:
             self.get_api_weather_data()
 
-        self.generate_target_temp()
         self.generate_output_message() 
 
     @staticmethod
@@ -45,24 +45,29 @@ class WeatherMan:
         cur_datetime = datetime.now()
         return cur_datetime.strftime("%m-%d-%Y")
     
-    def generate_target_temp(self):
+    def get_target(self):
         h = self.weather_data['high']
         l = self.weather_data['low']
-        self.target = float(l + ((h - l) *.8))
+        if h is not None and l is not None:
+            self.target = float(l + ((h - l) *.8))
+        else:
+            self.target = None
 
 
     def generate_output_message(self): 
+        try:
 
-        source_name = "API" if self.method == 0 else "Web"
-        self.output += f"Source: {source_name}\n"
-        self.output += f"Today's date: {WeatherMan.get_todays_date()}\n"
-        self.output += f"Current: {self.weather_data['temp']}°F\n"
-        self.output += f"Description: {self.weather_data['desc']}\n"
-        self.output += f"High: {self.weather_data['high']}°F\n"
-        self.output += f"Low: {self.weather_data['low']}°F\n"
-        self.output += f"Humidity: {self.weather_data['humid']}%\n"
-        self.output += f"Wind Speed: {self.weather_data['wind']}mph"
-    
+            source_name = "API" if self.method == 0 else "Web"
+            self.output += f"Source: {source_name}\n"
+            self.output += f"Today's date: {WeatherMan.get_todays_date()}\n"
+            self.output += f"Current: {self.weather_data['temp']}°F\n"
+            self.output += f"Description: {self.weather_data['desc']}\n"
+            self.output += f"High: {self.weather_data['high']}°F\n"
+            self.output += f"Low: {self.weather_data['low']}°F\n"
+            self.output += f"Humidity: {self.weather_data['humid']}%\n"
+            self.output += f"Wind Speed: {self.weather_data['wind']}mph"
+        except KeyError as e:
+            raise KeyError
 
     def web_scrape_weather_data(self): #retrievs weather data function from google
         try:
@@ -81,7 +86,7 @@ class WeatherMan:
             self.weather_data['wind'] = int((r.html.find('div.wtsRwe', first=True).find('span#wob_ws', first=True).text)[:-4])
 
         except (AttributeError, KeyError) as e:
-            print("Error: Invalid City, edit config file")
+            raise KeyError
             
 
 
