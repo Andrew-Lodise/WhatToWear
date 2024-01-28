@@ -52,8 +52,8 @@ class Tk_ui:
             self.root, 
             padx=3, 
             pady=12, 
-            width=800, 
-            height= 450, 
+            width=1000, 
+            height= 800, 
             bg=self.bg_color)
         
         self.mainframe.pack()
