@@ -1,4 +1,5 @@
 from classes.outfits import Outfits
+import random
 
 class OutfitRecommender:
     def __init__(self):
@@ -17,9 +18,10 @@ class OutfitRecommender:
 
     def update_recommendation(self):
         self.recommendation = "Outfit Recommendation:\n"
-        for i, outfit in enumerate(self.outfit_list):
-            self.recommendation += f"Option {i + 1}:\n"
-            self.recommendation += str(outfit) + "\n\n"
+
+        # choses a random outfit within that temp range
+        rand_selection = random.randint(0, len(self.outfit_list)-1)
+        self.recommendation += str(self.outfit_list[rand_selection])
 
 
     def recommend_outfit(self):

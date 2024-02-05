@@ -111,7 +111,7 @@ class WeatherMan:
     def read_config(self): # reading config file to set city, api key, and method type 
         try:
             config = configparser.ConfigParser()
-            config.read('config/config.ini')
+            config.read('./config/config.ini')
             self.api_key = config.get('Weatherman', 'api_key')
         except configparser.NoOptionError as e:
             print(f"Error reading config file: {e}")

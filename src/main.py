@@ -1,7 +1,7 @@
 from classes.email_sender import EmailSender
 from classes.outfit_recommender import OutfitRecommender
 from classes.weatherman import WeatherMan
-from classes.tk_ui import Tk_ui
+from classes.tk_ui import MainApplication
 
 
 def main():
@@ -12,7 +12,7 @@ def main():
     email_sender = EmailSender([wm.output, os.recommendation])
 
     # test the ui
-    gotk = Tk_ui()
+    gotk = MainApplication()
 
     # EmailSender tests
     #print(email_sender.body) #✔
