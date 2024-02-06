@@ -37,7 +37,8 @@ class OutfitRecommender:
 
     def make_outfit_list_from_csv(self):
         cp = CsvPanda("data/outfits.csv")
-        for row in cp.df.iterrows():
+        sorted_df = cp.df.sort_values("high", ascending=False)
+        for row in sorted_df.iterrows():
             self.outfit_list.append(Outfit(
                 row[1]["head"], 
                 row[1]["torso"], 

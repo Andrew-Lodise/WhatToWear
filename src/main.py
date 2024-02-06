@@ -20,6 +20,7 @@ def main():
     #email_sender.send_email() #✔
 
     #csv panda test
+    #mycp = CsvPanda("data/outfits.csv")
     
     
     

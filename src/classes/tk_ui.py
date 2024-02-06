@@ -186,9 +186,6 @@ class OutfitsPage(tk.Frame):
     def __init__(self, parent, controller):
         self.bg_color="#42e0f0"
         self.outfits = OutfitRecommender().outfit_list
-
-        # setup tk variables that change in real time
-
         tk.Frame.__init__(self, parent, bg=self.bg_color)
 
         title_label = tk.Label(
@@ -199,11 +196,11 @@ class OutfitsPage(tk.Frame):
             font=("Arial Bold ", 36)
             ).pack(pady=15)
         
-        outfit_table_frame = tk.Frame(self, bg="black", width=800, height=500)
+        outfit_table_frame = tk.Frame(self, bg="blue", width=800)
         outfit_table_frame.pack(pady=10, padx=15)
 
         cols = ["Head", "Torso", "Leg", "Foot", "High", "Low"]
-        tree = ttk.Treeview(outfit_table_frame, columns=cols, show='headings')
+        tree = ttk.Treeview(outfit_table_frame, columns=cols, show='headings', height=len(self.outfits))
 
         for col in cols:
             tree.heading(col, text=col, anchor="center")
@@ -211,8 +208,8 @@ class OutfitsPage(tk.Frame):
 
         # Set font size
         style = ttk.Style()
-        style.configure("Treeview.Heading", font=('Arial Bold', 18))  # Adjust the font size here
-        style.configure("Treeview", font=('Arial', 14))  # Adjust the font size here
+        style.configure("Treeview.Heading", font=('Arial Bold', 18), foreground="black")  # Adjust the font size here
+        style.configure("Treeview", font=('Arial', 14), foreground="black")  # Adjust the font size here
 
         # Configure row styles
         tree.tag_configure('oddrow', background='#E8E8E8')
@@ -222,7 +219,6 @@ class OutfitsPage(tk.Frame):
         for i, outfit in enumerate(self.outfits):
             tags = 'evenrow' if i % 2 == 0 else 'oddrow'
             tree.insert("", "end", values=outfit.get_list(), tags=tags)
-
 
         tree.grid(row=0, column=0)
         
