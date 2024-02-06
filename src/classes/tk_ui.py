@@ -1,6 +1,8 @@
 import tkinter as tk
+from tkinter import ttk
 from classes.outfit_recommender import OutfitRecommender
 from classes.weatherman import WeatherMan
+from classes.csv_panda import CsvPanda
 
 class MainApplication(tk.Tk):
     def __init__(self):
@@ -27,6 +29,7 @@ class MainApplication(tk.Tk):
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+
 
 class StartPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -182,6 +185,7 @@ class StartPage(tk.Frame):
 class OutfitsPage(tk.Frame):
     def __init__(self, parent, controller):
         self.bg_color="#42e0f0"
+        self.outfits = OutfitRecommender().outfit_list
 
         # setup tk variables that change in real time
 
@@ -194,6 +198,33 @@ class OutfitsPage(tk.Frame):
             foreground="black",
             font=("Arial Bold ", 36)
             ).pack(pady=15)
+        
+        outfit_table_frame = tk.Frame(self, bg="black", width=800, height=500)
+        outfit_table_frame.pack(pady=10, padx=15)
+
+        cols = ["Head", "Torso", "Leg", "Foot", "High", "Low"]
+        tree = ttk.Treeview(outfit_table_frame, columns=cols, show='headings')
+
+        for col in cols:
+            tree.heading(col, text=col, anchor="center")
+            tree.column(col, width=(150))
+
+        # Set font size
+        style = ttk.Style()
+        style.configure("Treeview.Heading", font=('Arial Bold', 18))  # Adjust the font size here
+        style.configure("Treeview", font=('Arial', 14))  # Adjust the font size here
+
+        # Configure row styles
+        tree.tag_configure('oddrow', background='#E8E8E8')
+        tree.tag_configure('evenrow', background='white')
+        
+        # populate table
+        for i, outfit in enumerate(self.outfits):
+            tags = 'evenrow' if i % 2 == 0 else 'oddrow'
+            tree.insert("", "end", values=outfit.get_list(), tags=tags)
+
+
+        tree.grid(row=0, column=0)
         
         home_button = tk.Button(
             self,
@@ -208,3 +239,5 @@ class OutfitsPage(tk.Frame):
             font = ("Arial", 24),
             command=lambda: controller.destroy()
             ).pack(side="left",anchor="sw", padx=15, pady=15)
+        
+        

@@ -26,7 +26,7 @@ class CsvPanda:
             print("Error: can't open file of that type. Must be have .csv extension.")
 
 
-    def add_row(self, row_contents): #✔
+    def add_row(self, row_contents: list): #✔
 
         if not isinstance(row_contents, list):
             print(f"Error: enter a list with {self.df.shape[1]} items")
@@ -52,7 +52,7 @@ class CsvPanda:
             except KeyError as e:
                 print("Error: row does not exsist in df")
         
-        self.save_file()
+        self.save_file() #autosaves when you delete row
     
 
     def save_file(self): #✔

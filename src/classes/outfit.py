@@ -16,3 +16,6 @@ class Outfit:
         self.output += f"Leg: {self.leg}\n"
         self.output += f"Foot: {self.foot}"
         return self.output
+    
+    def get_list(self) -> list:
+        return [self.head, self.torso, self.leg, self.foot, self.high, self.low]
