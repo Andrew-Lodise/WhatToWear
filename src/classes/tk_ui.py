@@ -3,6 +3,11 @@ from tkinter import ttk
 from classes.outfit_recommender import OutfitRecommender
 from classes.weatherman import WeatherMan
 from classes.csv_panda import CsvPanda
+import os
+
+# Get the full path to the custom font file
+custom_font_path = "ProtestRevolution-Regular.ttf" 
+custom_font = ("Helvetica", 32)
 
 class MainApplication(tk.Tk):
     def __init__(self):
@@ -193,7 +198,7 @@ class OutfitsPage(tk.Frame):
             text="Outfits", 
             background=self.bg_color,
             foreground="black",
-            font=("Arial Bold ", 36)
+            font=("Arial Bold", 36)
             ).pack(pady=15)
         
         outfit_table_frame = tk.Frame(self, bg="blue", width=800)
@@ -208,8 +213,8 @@ class OutfitsPage(tk.Frame):
 
         # Set font size
         style = ttk.Style()
-        style.configure("Treeview.Heading", font=('Arial Bold', 18), foreground="black")  # Adjust the font size here
-        style.configure("Treeview", font=('Arial', 14), foreground="black")  # Adjust the font size here
+        style.configure("Treeview.Heading", font=(custom_font, 18), foreground="black")  # Adjust the font size here
+        style.configure("Treeview", font=('Arial', 12), foreground="black")  # Adjust the font size here
 
         # Configure row styles
         tree.tag_configure('oddrow', background='#E8E8E8')
@@ -235,5 +240,19 @@ class OutfitsPage(tk.Frame):
             font = ("Arial", 24),
             command=lambda: controller.destroy()
             ).pack(side="left",anchor="sw", padx=15, pady=15)
+        
+        test_font = tk.Label(
+            self,
+            text="TESTING",
+            font=("Times New Roman", 30),
+            foreground="pink"
+        ).pack()
+
+        default_test_font = tk.Label(
+            self,
+            text="TESTING",
+            foreground="pink",
+            font=("Terminal", 30)
+        ).pack()
         
         
