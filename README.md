@@ -11,25 +11,28 @@ I built this because I felt this was a process in my life that I could automate,
 Unfortunately my tk_ui file is very long (almost 500 lines) This is something I wish I thought about sooner but the way I switch between the frames makes it impossible to refactor the code into different files for each frame.
 
 ## Installation guide
-1. install dependencies with
-    "pip install -r requirements.txt"
+- install dependencies with
+    - "pip install -r requirements.txt"
 
-2. Enter your [OpenWeatherMap api key](https://openweathermap.org/) into the config file
-    more information can be found in "src\config\config_templet.ini"
+- Enter your [OpenWeatherMap api key](https://openweathermap.org/) into config file
+    - more information can be found in "src\config\config_templet.ini"
 
-3. navigate to scr folder with "cd src"
+- navigate to scr folder from terminal wiht
+    - "cd src"
 
-4. run main.py with "python main.py"
+- run main.py with 
+    - "python main.py"
     
 ## future improvements
     - get rid of the bug where you can change the widths of the colunms in the table
     - make it prettier with fonts/colors
     - add error spot for deleting a outfit
-
-## Links to other documents:
-- [Google doc](https://docs.google.com/document/d/1FkmB037FntJbgY8V3NB2TJgsuS_zxG-1/edit)
-- [Docker Hub](https://hub.docker.com/repository/docker/al964440/whattowear/general)
+    - clean up tk file somehow
 
 ## Tutorials I used for small portions of the project
 - [webscraping weather data](https://youtu.be/cta1yCb3vA8) 
 - [sending emails](https://youtu.be/B1IsCbXp0uE)
+
+## Links to other documents:
+- [Google doc](https://docs.google.com/document/d/1FkmB037FntJbgY8V3NB2TJgsuS_zxG-1/edit) (stopped updating)
+- [Docker Hub](https://hub.docker.com/repository/docker/al964440/whattowear/general) (not used)
