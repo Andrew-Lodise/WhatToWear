@@ -1,8 +1,7 @@
 # What to Wear
 
 ## Description:
-### new
-This is a 1-page tkinter program that allows the user to search for weather information of anywhere in 
+This is a 2 page tkinter program that allows the user to search for weather information of anywhere in 
 the world either by web scraping from google or by using a weather api, it then generates a random outfit that fits that weather data from a csv file called "outfits.csv". The second page allows them to customize what outfits they want to program to choose from, they can enter 4 articles of clothing and the max temp and lowest temp the would wear that outfit. Everthing works with a csv file in the backgroud.
 
 This is a personal project to put on my portfolio it is not intended for many users, but I made it in a customizable way so it will work for everyone. 
@@ -13,20 +12,19 @@ Unfortunately my tk_ui file is very long (almost 500 lines) This is something I 
 
 ## Installation guide
 1. install dependencies with
-    pip install -r requirements.txt
+    "pip install -r requirements.txt"
 
-2. fill out config file with your information
-    [for OpenWeatherMap api key](https://openweathermap.org/)
+2. Enter your [OpenWeatherMap api key](https://openweathermap.org/) into the config file
+    more information can be found in "src\config\config_templet.ini"
 
-3. navigate to scr folder with
-    cd src
+3. navigate to scr folder with "cd src"
 
-4. run main.py with
-    python main.py
+4. run main.py with "python main.py"
     
 ## future improvements
     - get rid of the bug where you can change the widths of the colunms in the table
     - make it prettier with fonts/colors
+    - add error spot for deleting a outfit
 
 ## Links to other documents:
 - [Google doc](https://docs.google.com/document/d/1FkmB037FntJbgY8V3NB2TJgsuS_zxG-1/edit)
