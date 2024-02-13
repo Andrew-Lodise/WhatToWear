@@ -3,7 +3,6 @@ import smtplib
 from email.message import EmailMessage
 
 class EmailSender:
-
     def __init__(self, content):
         self.content = content
         self.subject = "WhatToWear Daily Recommendation"

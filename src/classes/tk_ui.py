@@ -126,14 +126,16 @@ class StartPage(tk.Frame):
             output_frame,
             textvariable = self.weather_output,
             font = ("Arial", 18),
-            background=self.bg_color,
-            foreground="black"
+            background="gray",
+            foreground="black",
+            width=30,
+            heigh=15
         ).grid(row=1, column=0, padx=15)
 
             # button widget to "generate the weather data"
         update_clothing_button = tk.Button(
             output_frame,
-            text = "Generate What to Wear",
+            text = "Generate Outfit",
             font = ("Arial", 24),
             command = self.update_clothing_rec
             ).grid(pady=10, row=0, column=1, padx=15)
@@ -143,8 +145,12 @@ class StartPage(tk.Frame):
             output_frame,
             textvariable = self.clothing_rec,
             font = ("Arial", 18),
-            background=self.bg_color,
-            foreground="black"
+            background="gray",
+            foreground="black",
+            width=30,
+            height=15,
+            
+            
         ).grid(row=1, column=1, padx=15)
 
 
@@ -189,9 +195,27 @@ class StartPage(tk.Frame):
 
 class OutfitsPage(tk.Frame):
     def __init__(self, parent, controller):
+
         self.bg_color="#42e0f0"
-        self.outfits = OutfitRecommender().outfit_list
-        tk.Frame.__init__(self, parent, bg=self.bg_color)
+        self.outfit_recommender = OutfitRecommender()
+        self.outfits = self.outfit_recommender.outfit_list
+
+        # setup tk variables that change in real time
+        self.head_entry_text = tk.StringVar()
+        self.torso_entry_text = tk.StringVar()
+        self.leg_entry_text = tk.StringVar()
+        self.foot_entry_text = tk.StringVar()
+        self.high_entry_text = tk.StringVar()
+        self.low_entry_text = tk.StringVar()
+        self.error_output = tk.StringVar()
+        self.removal_index = tk.StringVar()
+
+        tk.Frame.__init__(
+            self, 
+            parent, 
+            bg=self.bg_color,
+            )
+        self.grid()
 
         title_label = tk.Label(
             self, 
@@ -201,15 +225,18 @@ class OutfitsPage(tk.Frame):
             font=("Arial Bold", 36)
             ).pack(pady=15)
         
-        outfit_table_frame = tk.Frame(self, bg="blue", width=800)
-        outfit_table_frame.pack(pady=10, padx=15)
+        self.outfit_table_frame = tk.Frame(self, bg="blue", width=1000)
+        self.outfit_table_frame.pack(pady=10, padx=15)
 
-        cols = ["Head", "Torso", "Leg", "Foot", "High", "Low"]
-        tree = ttk.Treeview(outfit_table_frame, columns=cols, show='headings', height=len(self.outfits))
+        self.cols = ["Head", "Torso", "Leg", "Foot", "High", "Low"]
+        self.tree = ttk.Treeview(self.outfit_table_frame, columns=self.cols, show='headings', height=len(self.outfits))
 
-        for col in cols:
-            tree.heading(col, text=col, anchor="center")
-            tree.column(col, width=(150))
+        for col in self.cols:
+            self.tree.heading(col, text=col, anchor="w")
+            self.tree.column(col, width=(1000//6), minwidth=150, stretch=False)
+        
+        # Additionally, configure the parent frame of the Treeview widget to prevent column resizing:
+        self.outfit_table_frame.grid_columnconfigure(0, weight=1)  # Ensure the first (and only) column of the outfit_table_frame widget has a weight of 1
 
         # Set font size
         style = ttk.Style()
@@ -217,15 +244,15 @@ class OutfitsPage(tk.Frame):
         style.configure("Treeview", font=('Arial', 12), foreground="black")  # Adjust the font size here
 
         # Configure row styles
-        tree.tag_configure('oddrow', background='#E8E8E8')
-        tree.tag_configure('evenrow', background='white')
+        self.tree.tag_configure('oddrow', background='#E8E8E8')
+        self.tree.tag_configure('evenrow', background='white')
         
         # populate table
         for i, outfit in enumerate(self.outfits):
             tags = 'evenrow' if i % 2 == 0 else 'oddrow'
-            tree.insert("", "end", values=outfit.get_list(), tags=tags)
+            self.tree.insert("", "end", values=outfit.get_list(), tags=tags)
 
-        tree.grid(row=0, column=0)
+        self.tree.grid(row=0, column=0)
         
         home_button = tk.Button(
             self,
@@ -240,19 +267,215 @@ class OutfitsPage(tk.Frame):
             font = ("Arial", 24),
             command=lambda: controller.destroy()
             ).pack(side="left",anchor="sw", padx=15, pady=15)
-        
-        test_font = tk.Label(
+
+        Add_user_label = tk.Label(
             self,
-            text="TESTING",
+            background=self.bg_color,
             font=("Times New Roman", 30),
-            foreground="pink"
+            text="Add Outfit Here↓"
         ).pack()
 
-        default_test_font = tk.Label(
+        form_bg = "lightblue"
+        form_frame = tk.Frame(
             self,
-            text="TESTING",
-            foreground="pink",
-            font=("Terminal", 30)
+            background=form_bg,
+            width=200
+        )
+        form_frame.pack(padx=0)
+
+        # labels and entries for the form to add a new user
+        label_font = ("Arial", 18)
+        entry_font = ("Times New Roman", 14)
+        head_label = tk.Label(
+            form_frame,
+            text="Head:",
+            font=label_font,
+            background=form_bg
+        ).grid(row=0, column=0)
+
+        head_entry = tk.Entry(
+            form_frame,
+            font=entry_font,
+            textvariable=self.head_entry_text
+        ).grid(row=1, column=0, padx=5, pady=5)
+
+        torso_label = tk.Label(
+            form_frame,
+            text="Torso:",
+            font=label_font,
+            background=form_bg
+        ).grid(row=0, column=1)
+
+        torso_entry = tk.Entry(
+            form_frame,
+            font=entry_font,
+            textvariable=self.torso_entry_text
+        ).grid(row=1, column=1, padx=5, pady=5)
+
+        leg_label = tk.Label(
+            form_frame,
+            text="Leg:",
+            font=label_font,
+            background=form_bg
+        ).grid(row=0, column=2)
+
+        leg_entry = tk.Entry(
+            form_frame,
+            font=entry_font,
+            textvariable=self.leg_entry_text
+        ).grid(row=1, column=2, padx=5, pady=5)
+        
+        foot_label = tk.Label(
+            form_frame,
+            text="Foot:",
+            font=label_font,
+            background=form_bg
+        ).grid(row=2, column=0)
+
+        foot_entry = tk.Entry(
+            form_frame,
+            font=entry_font,
+            textvariable=self.foot_entry_text
+        ).grid(row=3, column=0, padx=5, pady=5)
+
+        high_label = tk.Label(
+            form_frame,
+            text="High:",
+            font=label_font,
+            background=form_bg
+        ).grid(row=2, column=1)
+
+        high_entry = tk.Entry(
+            form_frame,
+            font=entry_font,
+            textvariable=self.high_entry_text
+        ).grid(row=3, column=1, padx=5, pady=5)
+
+        low_label = tk.Label(
+            form_frame,
+            text="Low:",
+            font=label_font,
+            background=form_bg
+        ).grid(row=2, column=2)
+
+        low_entry = tk.Entry(
+            form_frame,
+            font=entry_font,
+            textvariable=self.low_entry_text
+        ).grid(row=3, column=2, padx=5)
+
+        submit_buttom = ttk.Button(
+            form_frame,
+            text="Submit",
+            command=self.add_outfit_to_csv
+        ).grid(row=5, column=1)
+
+        error_label = tk.Label(
+            self,
+            textvariable=self.error_output,
+            font=("Arial", 14),
+            background=self.bg_color
+        )
+        error_label.pack()
+
+        delete_user_label = tk.Label(
+            self,
+            background=self.bg_color,
+            font=("Times New Roman", 30),
+            text="Delete Outfit Here↓"
         ).pack()
         
+        delete_frame = tk.Frame(
+            self,
+            background="lightgreen"
+        )
+        delete_frame.pack()
+
+        delete_outfit_label = tk.Label(
+            delete_frame,
+            background="lightgreen",
+            text="Enter the entry number below",
+            font=label_font
+        ).pack()
+    
+        delete_index_entry = tk.Entry(
+            delete_frame,
+            font=entry_font,
+            textvariable=self.removal_index
+        ).pack()
+
+        submit_buttom = ttk.Button(
+            delete_frame,
+            text="Submit",
+            command=self.remove_outfit_from_csv
+        ).pack()
+
+    def remove_outfit_from_csv(self):
+        try:
+            index = int(self.removal_index.get()) - 1
+            self.outfit_recommender.cp.delete_row(index)
+            self.repopulate_table()
+            self.removal_index.set(value="")
+        except Exception as e:
+            print("Error: make sure a number is in the field above")
+
+    def add_outfit_to_csv(self):
+        try:
+            head = self.head_entry_text.get()
+            torso = self.torso_entry_text.get()
+            leg = self.leg_entry_text.get()
+            foot = self.foot_entry_text.get()
+            high = self.high_entry_text.get()
+            low = self.low_entry_text.get()
+
+            row = [head, torso, leg, foot, float(high), float(low)]
+            self.outfit_recommender.cp.add_row(row)
+            self.repopulate_table()
+            self.error_output.set("Outfit Added.")
+            self.head_entry_text.set("")
+            self.torso_entry_text.set("")
+            self.leg_entry_text.set("")
+            self.foot_entry_text.set("")
+            self.high_entry_text.set("")
+            self.low_entry_text.set("")
+
+        except ValueError as e:
+            self.error_output.set("Error: fill in all fields.\nMake sure high and low are numbers")
+            print(f"error: {e}")
+
+    def repopulate_table(self):
+        # Clear existing items from the treeview
+        for item in self.tree.get_children():
+            self.tree.delete(item)
+
+        self.outfit_recommender = OutfitRecommender()
+        self.outfits = self.outfit_recommender.outfit_list
+        
+
+        self.cols = ["Head", "Torso", "Leg", "Foot", "High", "Low"]
+        if self.removal_index.get() == "":
+            self.tree = ttk.Treeview(self.outfit_table_frame, columns=self.cols, show='headings', height=len(self.outfits))
+
+        for col in self.cols:
+            self.tree.heading(col, text=col, anchor="w")
+            self.tree.column(col, width=(1000//6), minwidth=150, stretch=False)
+
+        # Additionally, configure the parent frame of the Treeview widget to prevent column resizing:
+        self.outfit_table_frame.grid_columnconfigure(0, weight=1)  # Ensure the first (and only) column of the outfit_table_frame widget has a weight of 1
+
+        # Set font size
+        style = ttk.Style()
+        style.configure("Treeview.Heading", font=(custom_font, 18), foreground="black")  # Adjust the font size here
+        style.configure("Treeview", font=('Arial', 12), foreground="black")  # Adjust the font size here
+
+        # Configure row styles
+        self.tree.tag_configure('oddrow', background='#E8E8E8')
+        self.tree.tag_configure('evenrow', background='white')
+
+        # populate table
+        for i, outfit in enumerate(self.outfits):
+            tags = 'evenrow' if i % 2 == 0 else 'oddrow'
+            self.tree.insert("", "end", values=outfit.get_list(), tags=tags)
+
+        self.tree.grid(row=0, column=0)
         

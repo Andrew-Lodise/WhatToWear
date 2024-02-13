@@ -1,6 +1,5 @@
 class Outfit:
     output = ""
-
     def __init__(self, head: str, torso: str, leg: str, foot: str, high: float, low: float):
         self.head = head
         self.torso = torso
@@ -18,4 +17,4 @@ class Outfit:
         return self.output
     
     def get_list(self) -> list:
-        return [self.head, self.torso, self.leg, self.foot, self.high, self.low]
+        return [self.head, self.torso, self.leg, self.foot, round(self.high), round(self.low)]

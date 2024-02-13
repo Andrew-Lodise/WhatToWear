@@ -4,6 +4,7 @@ from classes.weatherman import WeatherMan
 from classes.tk_ui import MainApplication
 from classes.csv_panda import CsvPanda
 from classes.outfit import Outfit
+from classes.tk_ui import MainApplication
 
 def main():
 
@@ -21,6 +22,10 @@ def main():
 
     #csv panda test
     #mycp = CsvPanda("data/outfits.csv")
+    #print(os.cp.df)
+    #os.cp.delete_row(int(8))
+    #print(os.cp.df)
+
     
     
     

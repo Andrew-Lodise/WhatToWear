@@ -7,7 +7,6 @@ autosave is implemented whener a row is added or deleted
 '''
 
 class CsvPanda:
-
     def __init__(self, csv_file):
         self.csv_file = csv_file
         self.retrieve_data()
@@ -21,21 +20,17 @@ class CsvPanda:
                 print("Error: csv file is empty")
             except FileNotFoundError as e:
                 print("Error: file does not exsit")
-        
         else:
             print("Error: can't open file of that type. Must be have .csv extension.")
 
 
     def add_row(self, row_contents: list): #✔
-
         if not isinstance(row_contents, list):
             print(f"Error: enter a list with {self.df.shape[1]} items")
-
         try:
             self.df.loc[len(self.df.index)] = row_contents #✔
         except ValueError as e:
             print("Error: mismatched df colums with number of items in list")
-
 
         self.save_file() #autosaves when you add row
 
