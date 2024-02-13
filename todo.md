@@ -1,4 +1,4 @@
 # todo list for what to wear project
 ### ui todo
-1. refactor tk_ui into multiple files and make a tk folder
-2. make it so the user can add or delete outfits, which will save to the csv using csvpanda
+1. satisfied with where this program is right now.
+2. I will be making a solo version for myself and that's why I kept email_sender
