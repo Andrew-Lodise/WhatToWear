@@ -46,6 +46,7 @@ class CsvPanda:
                 self.df.drop(row_index, inplace=True) #autosaves to same df
             except KeyError as e:
                 print("Error: row does not exsist in df")
+                raise KeyError
         
         self.save_file() #autosaves when you delete row
     
