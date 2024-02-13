@@ -2,7 +2,7 @@
 
 ## Description
 - This is a 2 page tkinter program that allows the user to search for weather information of anywhere in 
-the world either by web scraping from google or by using a weather api, it then generates a random outfit that fits that weather data from a csv file called "outfits.csv". The second page allows them to customize what outfits they want to program to choose from, they can enter 4 articles of clothing and the max temp and lowest temp the would wear that outfit. Everthing works with a csv file in the backgroud.
+the world either by web scraping from google or by using [OpenWeatherMap api](https://openweathermap.org/), it then generates a random outfit that fits that weather data from a csv file called "outfits.csv". The second page allows them to customize what outfits they want to program to choose from, they can enter 4 articles of clothing and the max temp and lowest temp the would wear that outfit. Everthing works with a csv file in the backgroud.
 
 - This is a personal project to put on my portfolio it is not intended for many users, but I made it in a customizable way so it will work for everyone. 
 
