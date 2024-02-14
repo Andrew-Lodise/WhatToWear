@@ -453,6 +453,7 @@ class OutfitsPage(tk.Frame):
         tip_to_delete = tk.Label(
             delete_frame,
             background=c5,
+            foreground="black",
             textvariable=self.delete_help,
             font=label_font,
             width=50
