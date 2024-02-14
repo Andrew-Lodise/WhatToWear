@@ -233,8 +233,8 @@ class OutfitsPage(tk.Frame):
         title_label = tk.Label(
             self, 
             text="Outfits", 
-            background=self.bg_color,
             foreground="black",
+            background=self.bg_color,
             font=title_font
             ).pack(pady=15)
         
@@ -250,7 +250,7 @@ class OutfitsPage(tk.Frame):
 
         for col in self.cols:
             self.tree.heading(col, text=col, anchor="w")
-            self.tree.column(col, width=(944//6), minwidth=150, stretch=False)
+            self.tree.column(col,stretch=False ,width=(944//6))
 
         # Set font size
         style = ttk.Style()
@@ -260,6 +260,8 @@ class OutfitsPage(tk.Frame):
         # Configure row styles
         self.tree.tag_configure('oddrow', background=c1)
         self.tree.tag_configure('evenrow', background=c2)
+
+        self.tree.bind("<Motion>", self.reset_column_widths)
         
         # populate table
         for i, outfit in enumerate(self.outfits):
@@ -272,6 +274,7 @@ class OutfitsPage(tk.Frame):
             self,
             background=self.bg_color,
             font=large_lable_font,
+            foreground="black",
             text="Add a new outfit here⬇️"
         ).pack()
 
@@ -290,14 +293,16 @@ class OutfitsPage(tk.Frame):
             form_frame,
             text="Head:",
             font=label_font,
-            background=form_bg
+            background=form_bg,
+            foreground="black",
         ).grid(row=0, column=0, sticky="s")
 
         head_entry = tk.Entry(
             form_frame,
             font=entry_font,
             textvariable=self.head_entry_text,
-            background=c1
+            background=c1,
+            foreground="black",
         )
         head_entry.grid(row=1, column=0, padx=25, sticky="n")
         head_entry.focus_set()
@@ -305,6 +310,7 @@ class OutfitsPage(tk.Frame):
         torso_label = tk.Label(
             form_frame,
             text="Torso:",
+            foreground="black",
             font=label_font,
             background=form_bg
         ).grid(row=0, column=1, sticky="s")
@@ -313,6 +319,7 @@ class OutfitsPage(tk.Frame):
             form_frame,
             font=entry_font,
             textvariable=self.torso_entry_text,
+            foreground="black",
             background=c1
         ).grid(row=1, column=1, padx=25, sticky="n")
 
@@ -320,12 +327,14 @@ class OutfitsPage(tk.Frame):
             form_frame,
             text="Leg:",
             font=label_font,
+            foreground="black",
             background=form_bg,
         ).grid(row=0, column=2, sticky="s")
 
         leg_entry = tk.Entry(
             form_frame,
             font=entry_font,
+            foreground="black",
             textvariable=self.leg_entry_text,
             background=c1
         ).grid(row=1, column=2, padx=25, sticky="n")
@@ -333,6 +342,7 @@ class OutfitsPage(tk.Frame):
         foot_label = tk.Label(
             form_frame,
             text="Foot:",
+            foreground="black",
             font=label_font,
             background=form_bg
         ).grid(row=2, column=0, sticky="s")
@@ -341,6 +351,7 @@ class OutfitsPage(tk.Frame):
             form_frame,
             font=entry_font,
             background=c1,
+            foreground="black",
             textvariable=self.foot_entry_text
         ).grid(row=3, column=0, padx=25, sticky="n")
 
@@ -348,6 +359,7 @@ class OutfitsPage(tk.Frame):
             form_frame,
             text="High:",
             font=label_font,
+            foreground="black",
             background=form_bg
         ).grid(row=2, column=1, sticky="s")
 
@@ -355,6 +367,7 @@ class OutfitsPage(tk.Frame):
             form_frame,
             font=entry_font,
             background=c1,
+            foreground="black",
             textvariable=self.high_entry_text
         ).grid(row=3, column=1, padx=25, sticky="n")
 
@@ -362,12 +375,14 @@ class OutfitsPage(tk.Frame):
             form_frame,
             text="Low:",
             font=label_font,
+            foreground="black",
             background=form_bg
         ).grid(row=2, column=2, sticky="s")
 
         low_entry = tk.Entry(
             form_frame,
             font=entry_font,
+            foreground="black",
             background=c1,
             textvariable=self.low_entry_text
         ).grid(row=3, column=2, padx=25, sticky="n")
@@ -376,6 +391,7 @@ class OutfitsPage(tk.Frame):
             form_frame,
             font= button_font,
             text="Submit",
+            foreground="black",
             command=self.add_outfit_to_csv,
         ).grid(row=5, column=0, padx=10, pady=20)
 
@@ -383,6 +399,7 @@ class OutfitsPage(tk.Frame):
             form_frame,
             textvariable=self.error_output,
             font=("Arial", 14),
+            foreground="black",
             background=c5
         )
         error_label.grid(row=5, column=1, columnspan=2)
@@ -391,6 +408,7 @@ class OutfitsPage(tk.Frame):
             self,
             background=self.bg_color,
             font=large_lable_font,
+            foreground="black",
             text="Delete Outfit Here⬇️"
         ).pack()
         
@@ -411,14 +429,16 @@ class OutfitsPage(tk.Frame):
             delete_form_frame,
             background=c5,
             text="Index:",
-            font=label_font
+            foreground="black",
+            font=large_lable_font
         ).grid(row=0, column=0)
     
         delete_index_entry = tk.Entry(
             delete_form_frame,
-            font=entry_font,
+            font=("Courier", 24),
             textvariable=self.removal_index,
             width=3,
+            foreground="black",
             background=c1,
             fg="black"
         ).grid(row=0, column=1, padx=10)
@@ -526,3 +546,7 @@ class OutfitsPage(tk.Frame):
 
         self.tree.grid(row=0, column=0)
         
+    def reset_column_widths(self, event):
+        # Reset column widths to their original sizes
+        for col in self.tree["columns"]:
+            self.tree.column(col, width=(944//6))
