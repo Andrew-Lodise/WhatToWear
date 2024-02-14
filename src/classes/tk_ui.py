@@ -9,16 +9,20 @@ c2 = "#b6dec8"
 c3 = "#9bd3b4"
 c4 = "#84c9a3"
 c5 = "#72b791" #darkest
-title_font = ("Arial Bold", 36)
-button_font = ("Arial", 20)
-label_font = ("Arial", 18)
-entry_font = ("Times New Roman", 20)
+title_font = ("Courier New Bold", 36)
+button_font = ("Courier New Bold", 20)
+label_font = ("Courier New", 18)
+entry_font = ("Times New Roman", 18)
+radio_font = ("Courier New Bold", 20)
+long_output_font = ("Courier New", 18)
+large_lable_font = ("Courier New", 30)
+medium_lable_font = ("Times New Roman", 24)
 
 class MainApplication(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
         self.title("What to Wear")
-        self.geometry("1000x800")
+        self.geometry("1000x840")
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
@@ -71,14 +75,14 @@ class StartPage(tk.Frame):
             text = "Enter city: ",
             background=c3,
             foreground="black",
-            font=("Arial", 24)
+            font=large_lable_font
         ).grid(row=0, column=0)
 
         # entry widget to capture city
         city_entry = tk.Entry(
             questionair_frame,
             textvariable=self.city_searched,
-            font=("Arial", 24),
+            font=entry_font,
             background=c1,
             foreground="black")
         city_entry.grid(row=0, column=1)
@@ -90,12 +94,12 @@ class StartPage(tk.Frame):
             questionair_frame,
             bg=c3)
         source_selection.grid(row=0, column=2)
-
+        
         # radio button widget for api
         api_radio = tk.Radiobutton(
             source_selection,
             text="Open Weather Map API", 
-            font = ("Arial", 20),
+            font = radio_font,
             variable=self.source,
             background = c3, 
             foreground = "black",
@@ -104,7 +108,7 @@ class StartPage(tk.Frame):
         web_radio = tk.Radiobutton(
             source_selection, 
             text="Google Web Scrape", 
-            font = ("Arial", 20),
+            font = radio_font,
             variable=self.source,
             background = c3, 
             foreground = "black",
@@ -120,15 +124,15 @@ class StartPage(tk.Frame):
         generate_weather_info_button = tk.Button(
             output_frame,
             text = "Generate weather data",
-            font = ("Arial", 24),
+            font = button_font,
             command = self.update_weather_output
             ).grid(pady=10, row=0, column=0, padx=15)
-
+        
         # label widget that displays the weather info
         self.weather_info = tk.Label(
             output_frame,
             textvariable = self.weather_output,
-            font = ("Arial", 18),
+            font = long_output_font,
             background=c4,
             foreground="black",
             width=30,
@@ -139,7 +143,7 @@ class StartPage(tk.Frame):
         update_clothing_button = tk.Button(
             output_frame,
             text = "Generate Outfit",
-            font = ("Arial", 24),
+            font = button_font,
             command = self.update_clothing_rec
             ).grid(pady=10, row=0, column=1, padx=15)
 
@@ -147,10 +151,11 @@ class StartPage(tk.Frame):
         self.clothing_info = tk.Label(
             output_frame,
             textvariable = self.clothing_rec,
-            font = ("Arial", 18),
+            font = long_output_font,
             background=c4,
             foreground="black",
             width=30,
+            anchor="center",
             height=12,
         ).grid(row=1, column=1, padx=15, pady=10)
 
@@ -158,14 +163,15 @@ class StartPage(tk.Frame):
         outfits_button = tk.Button(
             self,
             text = "Edit outfits",
-            font = ("Arial", 24),
-            command=lambda: controller.show_frame(OutfitsPage)
+            font = button_font,
+            command=lambda: controller.show_frame(OutfitsPage),
+            width=15
             ).pack(side="right",anchor="sw", padx=15, pady=15)
         
         close_button = tk.Button(
             self,
             text = "Exit",
-            font = ("Arial", 24),
+            font = button_font,
             command=lambda: controller.destroy()
             ).pack(side="left",anchor="se", padx=15, pady=15)
     
@@ -174,7 +180,7 @@ class StartPage(tk.Frame):
         
         if not city:
             self.weather_man = None
-            self.weather_output.set("Error: Enter a city in the box above")
+            self.weather_output.set("Error: Enter a city\nin the box above")
         else:
             try:
                 self.weather_man = WeatherMan(city, int(self.source.get()))
@@ -192,7 +198,7 @@ class StartPage(tk.Frame):
                 self.outfit_recommender.set_temp(self.weather_man.get_target())
                 self.clothing_rec.set(self.outfit_recommender.recommendation) 
             else:
-                self.clothing_rec.set("Error: provide weather info first")
+                self.clothing_rec.set("Error: provide weather\ninfo first")
         except ValueError as e:
             print("No outfits provided for that temp")
             self.clothing_rec.set("Error: No outfits provided for that temp")
@@ -229,14 +235,18 @@ class OutfitsPage(tk.Frame):
             text="Outfits", 
             background=self.bg_color,
             foreground="black",
-            font=("Arial Bold", 36)
+            font=title_font
             ).pack(pady=15)
         
         self.outfit_table_frame = tk.Frame(self, width=950)
         self.outfit_table_frame.pack(pady=10, padx=15)
 
         self.cols = ["Head", "Torso", "Leg", "Foot", "High", "Low"]
-        self.tree = ttk.Treeview(self.outfit_table_frame, columns=self.cols, show='headings', height=len(self.outfits))
+        self.tree = ttk.Treeview(
+            self.outfit_table_frame, 
+            columns=self.cols, 
+            show='headings', 
+            height=len(self.outfits) if len(self.outfits) < 10 else 10)
 
         for col in self.cols:
             self.tree.heading(col, text=col, anchor="w")
@@ -257,157 +267,165 @@ class OutfitsPage(tk.Frame):
             self.tree.insert("", "end", values=outfit.get_list(), tags=tags)
 
         self.tree.grid(row=0, column=0)
-
+        
         Add_user_label = tk.Label(
             self,
             background=self.bg_color,
-            font=("Times New Roman", 30),
-            text="Add a new outfit here↓"
+            font=large_lable_font,
+            text="Add a new outfit here⬇️"
         ).pack()
 
+        
+
+        # labels and entries for the form to add a new user
         form_bg = c5
         form_frame = tk.Frame(
             self,
             background=form_bg,
             width=950
         )
-        form_frame.pack()
-
-        # labels and entries for the form to add a new user
-        
+        form_frame.pack(padx=0, pady=0)
 
         head_label = tk.Label(
             form_frame,
             text="Head:",
             font=label_font,
             background=form_bg
-        ).grid(row=0, column=0)
+        ).grid(row=0, column=0, sticky="s")
 
         head_entry = tk.Entry(
             form_frame,
             font=entry_font,
-            textvariable=self.head_entry_text
-        ).grid(row=1, column=0, padx=5, pady=5)
+            textvariable=self.head_entry_text,
+            background=c1
+        )
+        head_entry.grid(row=1, column=0, padx=25, sticky="n")
+        head_entry.focus_set()
 
         torso_label = tk.Label(
             form_frame,
             text="Torso:",
             font=label_font,
             background=form_bg
-        ).grid(row=0, column=1)
+        ).grid(row=0, column=1, sticky="s")
 
         torso_entry = tk.Entry(
             form_frame,
             font=entry_font,
-            textvariable=self.torso_entry_text
-        ).grid(row=1, column=1, padx=5, pady=5)
+            textvariable=self.torso_entry_text,
+            background=c1
+        ).grid(row=1, column=1, padx=25, sticky="n")
 
         leg_label = tk.Label(
             form_frame,
             text="Leg:",
             font=label_font,
-            background=form_bg
-        ).grid(row=0, column=2)
+            background=form_bg,
+        ).grid(row=0, column=2, sticky="s")
 
         leg_entry = tk.Entry(
             form_frame,
             font=entry_font,
-            textvariable=self.leg_entry_text
-        ).grid(row=1, column=2, padx=5, pady=5)
+            textvariable=self.leg_entry_text,
+            background=c1
+        ).grid(row=1, column=2, padx=25, sticky="n")
         
         foot_label = tk.Label(
             form_frame,
             text="Foot:",
             font=label_font,
             background=form_bg
-        ).grid(row=2, column=0)
+        ).grid(row=2, column=0, sticky="s")
 
         foot_entry = tk.Entry(
             form_frame,
             font=entry_font,
+            background=c1,
             textvariable=self.foot_entry_text
-        ).grid(row=3, column=0, padx=5, pady=5)
+        ).grid(row=3, column=0, padx=25, sticky="n")
 
         high_label = tk.Label(
             form_frame,
             text="High:",
             font=label_font,
             background=form_bg
-        ).grid(row=2, column=1)
+        ).grid(row=2, column=1, sticky="s")
 
         high_entry = tk.Entry(
             form_frame,
             font=entry_font,
+            background=c1,
             textvariable=self.high_entry_text
-        ).grid(row=3, column=1, padx=5, pady=5)
+        ).grid(row=3, column=1, padx=25, sticky="n")
 
         low_label = tk.Label(
             form_frame,
             text="Low:",
             font=label_font,
             background=form_bg
-        ).grid(row=2, column=2)
+        ).grid(row=2, column=2, sticky="s")
 
         low_entry = tk.Entry(
             form_frame,
             font=entry_font,
+            background=c1,
             textvariable=self.low_entry_text
-        ).grid(row=3, column=2, padx=5)
+        ).grid(row=3, column=2, padx=25, sticky="n")
 
         submit_buttom = tk.Button(
             form_frame,
             font= button_font,
             text="Submit",
             command=self.add_outfit_to_csv,
-        ).grid(row=5, column=0)
+        ).grid(row=5, column=0, padx=10, pady=20)
 
         error_label = tk.Label(
             form_frame,
             textvariable=self.error_output,
             font=("Arial", 14),
-            background=self.bg_color
+            background=c5
         )
         error_label.grid(row=5, column=1, columnspan=2)
 
         delete_user_label = tk.Label(
             self,
             background=self.bg_color,
-            font=("Times New Roman", 30),
-            text="Delete Outfit Here↓"
+            font=large_lable_font,
+            text="Delete Outfit Here⬇️"
         ).pack()
         
         delete_frame = tk.Frame(
             self,
             background=c5,
-            width=500
         )
         delete_frame.pack()
 
         delete_form_frame = tk.Frame(
             delete_frame,
             background=c5,
-            width=500
+            pady=10
         )
-        delete_form_frame.grid(row=0)
+        delete_form_frame.grid(row=0, column=0, columnspan=3)
 
         delete_index_label = tk.Label(
             delete_form_frame,
             background=c5,
             text="Index:",
-            font=("Arial", 24)
+            font=label_font
         ).grid(row=0, column=0)
     
         delete_index_entry = tk.Entry(
             delete_form_frame,
-            font=("Arial", 24),
+            font=entry_font,
             textvariable=self.removal_index,
-            width=3
+            width=3,
+            background=c1
         ).grid(row=0, column=1, padx=10)
 
         submit_buttom = tk.Button(
             delete_form_frame,
             text="Submit",
-            font=("Arial", 16),
+            font=("Arial", 14),
             command=self.remove_outfit_from_csv
         ).grid(row=0, column=2)
 
@@ -417,19 +435,20 @@ class OutfitsPage(tk.Frame):
             textvariable=self.delete_help,
             font=label_font,
             width=50
-        ).grid(row=2, column=0)
+        ).grid(row=2, column=0, columnspan=3, padx=150)
 
         home_button = tk.Button(
             self,
             text = "Back to home",
-            font = ("Arial", 24),
-            command=lambda: controller.show_frame(StartPage)
+            font = button_font,
+            command=lambda: controller.show_frame(StartPage),
+            width=15
             ).pack(side="right",anchor="se", padx=15, pady=15)
         
         close_button = tk.Button(
             self,
             text = "Exit",
-            font = ("Arial", 24),
+            font = button_font,
             command=lambda: controller.destroy()
             ).pack(side="left",anchor="sw", padx=15, pady=15)
 

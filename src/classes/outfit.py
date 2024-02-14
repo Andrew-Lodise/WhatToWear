@@ -10,10 +10,10 @@ class Outfit:
     
     def __str__(self):
         self.output = ""
-        self.output += f"Head: {self.head}\n"
-        self.output += f"Torso: {self.torso}\n"
-        self.output += f"Leg: {self.leg}\n"
-        self.output += f"Foot: {self.foot}"
+        self.output += f'{"Head" :.<5}{self.head:.>15}\n'       
+        self.output += f'{"Torso" :.<5}{self.torso:.>15}\n'  
+        self.output += f'{"Leg" :.<5}{self.leg:.>15}\n'
+        self.output += f'{"foot" :.<5}{self.foot:.>15}\n'
         return self.output
     
     def get_list(self) -> list:

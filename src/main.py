@@ -26,6 +26,13 @@ def main():
     #os.cp.delete_row(int(8))
     #print(os.cp.df)
 
+    #outfitRecommender
+    #print(os.recommendation)
+
+    #random
+    #st1 = "Part1"
+    #st2="part2"
+    #print(f"{st1 :.<20}{st2:.>20}")
     
     
     
