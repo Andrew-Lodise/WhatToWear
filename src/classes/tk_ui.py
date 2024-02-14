@@ -221,7 +221,7 @@ class OutfitsPage(tk.Frame):
         self.error_output = tk.StringVar()
         self.removal_index = tk.StringVar()
         self.delete_help = tk.StringVar()
-        self.delete_help.set("Hint: use (# from top) as index")
+        self.delete_help.set("Tip: use (# from top) as index")
 
         tk.Frame.__init__(
             self, 
@@ -419,13 +419,14 @@ class OutfitsPage(tk.Frame):
             font=entry_font,
             textvariable=self.removal_index,
             width=3,
-            background=c1
+            background=c1,
+            fg="black"
         ).grid(row=0, column=1, padx=10)
 
         submit_buttom = tk.Button(
             delete_form_frame,
             text="Submit",
-            font=("Arial", 14),
+            font=button_font,
             command=self.remove_outfit_from_csv
         ).grid(row=0, column=2)
 

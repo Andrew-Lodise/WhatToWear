@@ -53,13 +53,13 @@ class WeatherMan:
         try:
             source_name = "API" if self.method == 0 else "Web"
             self.output += f'{"Source" :.<12}{source_name:.>12}\n' 
-            self.output += f'{"Today's date" :.<12}{WeatherMan.get_todays_date():.>12}\n' 
-            self.output += f'{"Current" :.<12}{self.weather_data['temp']:.>10}°F\n' 
-            self.output += f'{"Description" :.<12}{self.weather_data['desc']:.>12}\n' 
-            self.output += f'{"High" :.<12}{self.weather_data['high']:.>10}°F\n' 
-            self.output += f'{"Low" :.<12}{self.weather_data['low']:.>10}°F\n' 
-            self.output += f'{"Humidity" :.<12}{self.weather_data['humid']:.>11}%\n' 
-            self.output += f'{"Wind Speed" :.<12}{self.weather_data['wind']:.>9}mph\n' 
+            self.output += f'{"Todays date" :.<12}{WeatherMan.get_todays_date():.>12}\n' 
+            self.output += f'{"Current" :.<12}{self.weather_data["temp"]:.>10}°F\n' 
+            self.output += f'{"Description" :.<12}{self.weather_data["desc"]:.>12}\n' 
+            self.output += f'{"High" :.<12}{self.weather_data["high"]:.>10}°F\n' 
+            self.output += f'{"Low" :.<12}{self.weather_data["low"]:.>10}°F\n' 
+            self.output += f'{"Humidity" :.<12}{self.weather_data["humid"]:.>11}%\n' 
+            self.output += f'{"Wind Speed" :.<12}{self.weather_data["wind"]:.>9}mph\n' 
         except KeyError as e:
             raise KeyError
 
